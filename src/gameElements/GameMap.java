@@ -130,6 +130,7 @@ public class GameMap {
         boolean actual = true;
         Field actualPosition = getPlayerActualPosition(areaMatrix);
 
+        //zseblámpa fénye
         System.out.println();
         for (int row = 0; row < areaMatrix.length; row++) {
             for (int column = 0; column < areaMatrix[row].length; column++) {

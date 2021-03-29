@@ -24,7 +24,7 @@ public class Game {
         System.out.println("-----------------------------------------------------");
         System.out.println(
                 "\nA feladatod hogy 8 papírt összegyűjts az erdő mélyén. " +
-                "\nMagaddal vihetsz egy zseblámpát ami világítja neked az utat." +
+                "\nMagaddal vihetsz egy ZSEBLÁMPÁT ami VILÁGÍTJA neked az utat." +
                 "\nHa összegyűjtöd őket, talán sikerül megtudnod a titkot amit az erdő rejt." +
                 "\nDe légy óvatos! Lehet, hogy nem vagy egyedül..."
         );
