@@ -208,23 +208,30 @@ public class GameMap {
                 "------------------------------------------" +
                 "\nHiba: Erre nem léphetsz ez a mező foglalt!" +
                 "\n------------------------------------------";
+
         String outOfMapError =
                 "-----------------------------------------" +
                 "\nHiba: Erre nem léphetsz itt a pálya vége!" +
                 "\n-----------------------------------------";
 
-        boolean outOfMap;
-
+        boolean outOfMapTop;
+        boolean outOfMapLeft;
+        boolean outOfMapBottom;
+        boolean outOfMapRight;
         for (int row = 0; row < areaMatrix.length; row++) {
             for (int column = 0; column < areaMatrix[row].length; column++) {
 
                 //TODO: befejezi a térképről való lelépést
-                outOfMap = row < 0 || row >= areaMatrix.length && column < 0 || column >= areaMatrix[row].length;
+                //outOfMap = row - 1 == -1 || row + 1 == 15 || column - 1 == -1 || column + 1 == 15;
+                outOfMapTop = row - 1 == -1;
+                outOfMapLeft = column - 1 == -1;
+                outOfMapBottom = row + 1 == 15;
+                outOfMapRight = column + 1 == 15;
                 if (areaMatrix[row][column].getOwnerId() == 9) {
                     System.out.println();
                     switch (where) {
                         case "w":
-                            if (!outOfMap) {
+                            if (!outOfMapTop) {
                                 if (!(areaMatrix[row - 1][column].isReserved())) {
 
                                     areaMatrix[row][column].setOwnerId(0);
@@ -240,7 +247,7 @@ public class GameMap {
                             }
                         break;
                         case "a":
-                            if (!outOfMap) {
+                            if (!outOfMapLeft) {
                                 if (!(areaMatrix[row][column - 1].isReserved())) {
 
                                     areaMatrix[row][column].setOwnerId(0);
@@ -256,7 +263,7 @@ public class GameMap {
                             }
                         break;
                         case "s":
-                            if (!outOfMap) {
+                            if (!outOfMapBottom) {
                                 if (!(areaMatrix[row + 1][column].isReserved())) {
 
                                     areaMatrix[row][column].setOwnerId(0);
@@ -272,7 +279,7 @@ public class GameMap {
                             }
                         break;
                         case "d":
-                            if (!outOfMap) {
+                            if (!outOfMapRight) {
                                 if (!(areaMatrix[row][column + 1].isReserved())) {
 
                                     areaMatrix[row][column].setOwnerId(0);
