@@ -142,7 +142,7 @@ public class GameMap {
 
                 a = areaMatrix[row][column].getOwnerId() == actualPosition.getOwnerId() ||
                     areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 1 ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 2||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 2 ||
                     areaMatrix[row][column].getRow() == actualPosition.getRow() - 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 2 ||
                     areaMatrix[row][column].getRow() == actualPosition.getRow() + 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 2;
 
@@ -154,7 +154,7 @@ public class GameMap {
 
                 d = areaMatrix[row][column].getOwnerId() == actualPosition.getOwnerId() ||
                     areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 1 ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2 ||
                     areaMatrix[row][column].getRow() == actualPosition.getRow() - 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2 ||
                     areaMatrix[row][column].getRow() == actualPosition.getRow() + 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2;
 
@@ -208,61 +208,85 @@ public class GameMap {
                 "------------------------------------------" +
                 "\nHiba: Erre nem léphetsz ez a mező foglalt!" +
                 "\n------------------------------------------";
+        String outOfMapError =
+                "-----------------------------------------" +
+                "\nHiba: Erre nem léphetsz itt a pálya vége!" +
+                "\n-----------------------------------------";
+
+        boolean outOfMap;
 
         for (int row = 0; row < areaMatrix.length; row++) {
             for (int column = 0; column < areaMatrix[row].length; column++) {
 
+                //TODO: befejezi a térképről való lelépést
+                outOfMap = row < 0 || row >= areaMatrix.length && column < 0 || column >= areaMatrix[row].length;
                 if (areaMatrix[row][column].getOwnerId() == 9) {
                     System.out.println();
                     switch (where) {
                         case "w":
-                            if (!(areaMatrix[row - 1][column].isReserved())) {
+                            if (!outOfMap) {
+                                if (!(areaMatrix[row - 1][column].isReserved())) {
 
-                                areaMatrix[row][column].setOwnerId(0);
-                                areaMatrix[row][column].setReserved(false);
-                                areaMatrix[row - 1][column].setOwnerId(9);
-                                areaMatrix[row - 1][column].setReserved(true);
-                                this.setLastDirection("w");
+                                    areaMatrix[row][column].setOwnerId(0);
+                                    areaMatrix[row][column].setReserved(false);
+                                    areaMatrix[row - 1][column].setOwnerId(9);
+                                    areaMatrix[row - 1][column].setReserved(true);
+                                    this.setLastDirection("w");
+                                } else {
+                                    System.out.println(reservedError);
+                                }
                             } else {
-                                System.out.println(reservedError);
+                                System.out.println(outOfMapError);
                             }
-                            break;
+                        break;
                         case "a":
-                            if (!(areaMatrix[row][column - 1].isReserved())) {
+                            if (!outOfMap) {
+                                if (!(areaMatrix[row][column - 1].isReserved())) {
 
-                                areaMatrix[row][column].setOwnerId(0);
-                                areaMatrix[row][column].setReserved(false);
-                                areaMatrix[row][column - 1].setOwnerId(9);
-                                areaMatrix[row][column - 1].setReserved(true);
-                                this.setLastDirection("a");
+                                    areaMatrix[row][column].setOwnerId(0);
+                                    areaMatrix[row][column].setReserved(false);
+                                    areaMatrix[row][column - 1].setOwnerId(9);
+                                    areaMatrix[row][column - 1].setReserved(true);
+                                    this.setLastDirection("a");
+                                } else {
+                                    System.out.println(reservedError);
+                                }
                             } else {
-                                System.out.println(reservedError);
+                                System.out.println(outOfMapError);
                             }
-                            break;
+                        break;
                         case "s":
-                            if (!(areaMatrix[row + 1][column].isReserved())) {
+                            if (!outOfMap) {
+                                if (!(areaMatrix[row + 1][column].isReserved())) {
 
-                                areaMatrix[row][column].setOwnerId(0);
-                                areaMatrix[row][column].setReserved(false);
-                                areaMatrix[row + 1][column].setOwnerId(9);
-                                areaMatrix[row + 1][column].setReserved(true);
-                                this.setLastDirection("s");
+                                    areaMatrix[row][column].setOwnerId(0);
+                                    areaMatrix[row][column].setReserved(false);
+                                    areaMatrix[row + 1][column].setOwnerId(9);
+                                    areaMatrix[row + 1][column].setReserved(true);
+                                    this.setLastDirection("s");
+                                } else {
+                                    System.out.println(reservedError);
+                                }
                             } else {
-                                System.out.println(reservedError);
+                                System.out.println(outOfMapError);
                             }
-                            break;
+                        break;
                         case "d":
-                            if (!(areaMatrix[row][column + 1].isReserved())) {
+                            if (!outOfMap) {
+                                if (!(areaMatrix[row][column + 1].isReserved())) {
 
-                                areaMatrix[row][column].setOwnerId(0);
-                                areaMatrix[row][column].setReserved(false);
-                                areaMatrix[row][column + 1].setOwnerId(9);
-                                areaMatrix[row][column + 1].setReserved(true);
-                                this.setLastDirection("d");
+                                    areaMatrix[row][column].setOwnerId(0);
+                                    areaMatrix[row][column].setReserved(false);
+                                    areaMatrix[row][column + 1].setOwnerId(9);
+                                    areaMatrix[row][column + 1].setReserved(true);
+                                    this.setLastDirection("d");
+                                } else {
+                                    System.out.println(reservedError);
+                                }
                             } else {
-                                System.out.println(reservedError);
+                                System.out.println(outOfMapError);
                             }
-                            break;
+                        break;
                     }
                     return;
                 }

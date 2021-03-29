@@ -54,6 +54,7 @@ public class Game {
         do {
             actual.controlUnder(actual.getAreaMatrix());
             actual.printMap(actual.getAreaMatrix());
+            System.out.println("\nFennmaradó papírok száma: " + actual.getRemainingPaperNumber());
         } while (!(actual.getRemainingPaperNumber() == 0));
     }
 }
