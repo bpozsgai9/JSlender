@@ -123,18 +123,48 @@ public class GameMap {
 
     public void printMap(Field [][] areaMatrix) {
 
-        System.out.println();
+        boolean w;
+        boolean a;
+        boolean s;
+        boolean d;
+        boolean actual = true;
         Field actualPosition = getPlayerActualPosition(areaMatrix);
+
+        System.out.println();
         for (int row = 0; row < areaMatrix.length; row++) {
             for (int column = 0; column < areaMatrix[row].length; column++) {
-                if (
-                    //TODO: Ez eddig csak a felfele irány, bef. többi irány
-                    areaMatrix[row][column].getOwnerId() == actualPosition.getOwnerId() ||
+
+                w = areaMatrix[row][column].getOwnerId() == actualPosition.getOwnerId() ||
                     areaMatrix[row][column].getRow() == actualPosition.getRow() - 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() ||
                     areaMatrix[row][column].getRow() == actualPosition.getRow() - 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() ||
                     areaMatrix[row][column].getRow() == actualPosition.getRow() - 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 1 ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() - 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 1
-                ) {
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() - 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 1;
+
+                a = areaMatrix[row][column].getOwnerId() == actualPosition.getOwnerId() ||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 1 ||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 2||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() - 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 2 ||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 2;
+
+                s = areaMatrix[row][column].getOwnerId() == actualPosition.getOwnerId() ||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() ||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() ||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 1 ||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 1;
+
+                d = areaMatrix[row][column].getOwnerId() == actualPosition.getOwnerId() ||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 1 ||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() - 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2 ||
+                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2;
+
+                switch (this.getLastDirection()) {
+                    case "w": actual = w; break;
+                    case "a": actual = a; break;
+                    case "s": actual = s; break;
+                    case "d": actual = d; break;
+                }
+                if (actual) {
                     System.out.print(areaMatrix[row][column] + " ");
                 } else {
                     System.out.print("  ");
