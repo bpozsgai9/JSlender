@@ -1,14 +1,14 @@
 package fieldElements.movable;
 
+import fieldElements.FieldElement;
 import gameElements.Field;
 
-public abstract class MovableFigure {
+public abstract class MovableFigure extends FieldElement {
 
-    private int id;
     private Field position;
 
-    public MovableFigure(int id, Field position) {
-        this.id = id;
+    public MovableFigure(int id, boolean canContainPaper, boolean isInteroperable, Field position) {
+        super(id, canContainPaper, isInteroperable);
         this.position = position;
     }
 

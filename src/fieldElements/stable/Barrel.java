@@ -4,7 +4,7 @@ import gameElements.Field;
 
 public class Barrel extends FieldObject {
 
-    public Barrel(int id, boolean containsPaper, boolean isInteroperable, Field[][] reservedFieldArray) {
-        super(id, containsPaper, isInteroperable, reservedFieldArray);
+    public Barrel(boolean containsPaper, boolean isInteroperable, Field[][] reservedFieldArray) {
+        super(7, containsPaper, isInteroperable, reservedFieldArray);
     }
 }

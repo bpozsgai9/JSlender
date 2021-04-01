@@ -9,6 +9,7 @@ public class Field {
 
     public Field(int row, int column, boolean isReserved, int ownerId) {
 
+
         this.row = row;
         this.column = column;
         this.isReserved = isReserved;

@@ -4,7 +4,7 @@ import gameElements.Field;
 
 public class SmalSizeTree extends FieldObject {
 
-    public SmalSizeTree(int id, boolean containsPaper, boolean isInteroperable, Field[][] reservedFieldArray) {
-        super(id, containsPaper, isInteroperable, reservedFieldArray);
+    public SmalSizeTree( boolean containsPaper, boolean isInteroperable, Field[][] reservedFieldArray) {
+        super(1, containsPaper, isInteroperable, reservedFieldArray);
     }
 }

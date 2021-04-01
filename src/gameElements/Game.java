@@ -1,6 +1,5 @@
 package gameElements;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Game {
@@ -67,7 +66,7 @@ public class Game {
     public void play(GameMap actual) {
 
         do {
-            actual.controlUnder(actual.getAreaMatrix());
+            actual.controlOverMap(actual.getAreaMatrix());
             actual.printMap(actual.getAreaMatrix());
             System.out.println("\nFennmaradó papírok száma: " + actual.getRemainingPaperNumber());
         } while (!(actual.getRemainingPaperNumber() == 0));

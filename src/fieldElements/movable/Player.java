@@ -4,8 +4,8 @@ import gameElements.Field;
 
 public class Player extends MovableFigure {
 
-    public Player(int id, Field position) {
-        super(9, position);
+    public Player(Field position) {
+        super(9, false, false, position);
     }
 
     @Override

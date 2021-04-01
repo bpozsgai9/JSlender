@@ -4,7 +4,7 @@ import gameElements.Field;
 
 public class House extends FieldObject {
 
-    public House(int id, boolean containsPaper, boolean isInteroperable, Field[][] reservedFieldArray) {
-        super(id, containsPaper, isInteroperable, reservedFieldArray);
+    public House(boolean containsPaper, boolean isInteroperable, Field[][] reservedFieldArray) {
+        super(3, containsPaper, isInteroperable, reservedFieldArray);
     }
 }

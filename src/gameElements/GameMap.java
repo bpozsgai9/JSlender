@@ -225,11 +225,11 @@ public class GameMap {
 
     }
 
-    public void controlUnder(Field [][] areaMatrix) {
+    public void controlOverMap(Field [][] areaMatrix) {
 
         System.out.println("A te játékosod azonosítója: [9]");
         System.out.println("Merre szeretnél lépni?");
-        System.out.println("\tw - felfele\n\ta - balra\n\ts - lefele\n\td - jobbra\n\tm - térkép");
+        System.out.println("\tw - felfele\n\ta - balra\n\ts - lefele\n\td - jobbra\n\tm - térkép\n\tk - kilépés");
         System.out.print("Válasz: ");
         Scanner scanner = new Scanner(System.in);
         String readData = scanner.next();
@@ -249,6 +249,9 @@ public class GameMap {
             case "m":
                 printCleanMap(areaMatrix);
                 break;
+            case "k":
+                System.exit(0);
+                    break;
             default:
                 System.out.println("Nincs ilyen opció!");
                 break;

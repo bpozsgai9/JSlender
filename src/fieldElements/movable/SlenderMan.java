@@ -4,8 +4,8 @@ import gameElements.Field;
 
 public class SlenderMan extends MovableFigure {
 
-    public SlenderMan(int id, Field position) {
-        super(8, position);
+    public SlenderMan(Field position) {
+        super(8, false, false, position);
     }
 
     @Override

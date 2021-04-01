@@ -4,7 +4,7 @@ import gameElements.Field;
 
 public class LargeSizeTree extends FieldObject {
 
-    public LargeSizeTree(int id, boolean containsPaper, boolean isInteroperable, Field[][] reservedFieldArray) {
-        super(id, containsPaper, isInteroperable, reservedFieldArray);
+    public LargeSizeTree( boolean canContainPaper, boolean isInteroperable, Field[][] reservedFieldArray) {
+        super(2, canContainPaper, isInteroperable, reservedFieldArray);
     }
 }
