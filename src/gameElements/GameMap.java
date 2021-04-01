@@ -1,11 +1,15 @@
 package gameElements;
 
+import fieldElements.movable.Player;
+import fieldElements.movable.SlenderMan;
+import fieldElements.stable.*;
+
 import java.util.Scanner;
 
 public class GameMap {
 
     private int remainingPaperNumber;
-    private Field areaMatrix [][];
+    private Field[][] areaMatrix;
     private String lastDirection;
 
     public GameMap() {
@@ -43,10 +47,10 @@ public class GameMap {
     public void setLastDirection(String lastDirection) { this.lastDirection = lastDirection; }
 
     public Field getPlayerActualPosition(Field [][] areaMatrix) {
-        for (int row = 0; row < areaMatrix.length; row++) {
-            for (int column = 0; column < areaMatrix[row].length; column++) {
-                if (areaMatrix[row][column].getOwnerId() == 9) {
-                    return areaMatrix[row][column];
+        for (Field[] matrix : areaMatrix) {
+            for (Field field : matrix) {
+                if (field.getOwnerId() == 9) {
+                    return field;
                 }
             }
         }
@@ -57,80 +61,80 @@ public class GameMap {
 
         for (int row = 0; row < areaMatrix.length; row++) {
             for (int column = 0; column < areaMatrix[row].length; column++) {
-                areaMatrix[row][column] = new Field(row, column, false, 0);
+                areaMatrix[row][column] = new Field(row, column, new EmptyField());
             }
         }
 
         //kiinduló helyzet
         //kis méretű fa
-        areaMatrix[0][11] = new Field(0, 11,true, 1);
-        areaMatrix[1][3] = new Field(1, 3,true, 1);
-        areaMatrix[1][13] = new Field(1, 13,true, 1);
-        areaMatrix[4][0] = new Field(4, 0,true, 1);
-        areaMatrix[5][7] = new Field(5, 7,true, 1);
-        areaMatrix[5][14] = new Field(5, 14,true, 1);
-        areaMatrix[10][2] = new Field(10, 2,true, 1);
-        areaMatrix[12][4] = new Field(12, 4,true, 1);
-        areaMatrix[12][12] = new Field(12, 12,true, 1);
-        areaMatrix[13][12] = new Field(13, 12,true, 1);
+        areaMatrix[0][11] = new Field(0, 11, new SmallSizeTree());
+        areaMatrix[1][3] = new Field(1, 3, new SmallSizeTree());
+        areaMatrix[1][13] = new Field(1, 13, new SmallSizeTree());
+        areaMatrix[4][0] = new Field(4, 0, new SmallSizeTree());
+        areaMatrix[5][7] = new Field(5, 7, new SmallSizeTree());
+        areaMatrix[5][14] = new Field(5, 14, new SmallSizeTree());
+        areaMatrix[10][2] = new Field(10, 2, new SmallSizeTree());
+        areaMatrix[12][4] = new Field(12, 4, new SmallSizeTree());
+        areaMatrix[12][12] = new Field(12, 12, new SmallSizeTree());
+        areaMatrix[13][12] = new Field(13, 12, new SmallSizeTree());
 
         for (int row = 0; row < areaMatrix.length; row++) {
             for (int column = 0; column < areaMatrix[row].length; column++) {
                 if (
                     //nagy méretű fa
-                    row > 12 && row <= 14 && column >= 0 && column < 2 ||
+                    row > 12 && row <= 14 && /*column >= 0 &&*/ column < 2 ||
                     row > 9 && row < 12 && column > 4 && column < 7 ||
                     row > 8 && row < 11 && column > 12 && column <= 14
                 ) {
-                    areaMatrix[row][column] = new Field(row, column,true, 2);
+                    areaMatrix[row][column] = new Field(row, column, new LargeSizeTree());
                 } else if (
                     //ház
                     row > 1 && row < 9 && column > 7 && column < 14
                 ) {
-                    areaMatrix[row][column] = new Field(row, column,true, 3);
+                    areaMatrix[row][column] = new Field(row, column, new House());
                 } else if (
                         //autó
-                        row >= 0 && row < 2 && column > 5 && column < 9  ||
+                        /*row >= 0 &&*/ row < 2 && column > 5 && column < 9  ||
                         row > 6 && row < 10 && column > 5 &&column < 8
                 ) {
-                    areaMatrix[row][column] = new Field(row, column, true, 4);
+                    areaMatrix[row][column] = new Field(row, column, new Car());
                 } else if (
                         //teherautó
                         row > 9 && row <= 14 && column > 8 && column < 12
                 ) {
-                    areaMatrix[row][column] = new Field(row, column,true, 5);
+                    areaMatrix[row][column] = new Field(row, column, new Truck());
                 } else if (
                         //szikla
-                        row >= 0 && row < 3 && column >= 0 && column < 3 ||
-                        row > 6 && row < 10 && column >= 0 && column < 3
+                        /*row >= 0 &&*/ row < 3 && /*column >= 0 &&*/ column < 3 ||
+                        row > 6 && row < 10 && /*column >= 0 &&*/ column < 3
                 ) {
-                    areaMatrix[row][column] = new Field(row, column,true, 6);
+                    areaMatrix[row][column] = new Field(row, column, new Rock());
                 } else if (
                         //hordó
                         row > 2 && row < 5 && column > 2 && column < 7
                 ) {
-                    areaMatrix[row][column] = new Field(row, column,true, 7);
+                    areaMatrix[row][column] = new Field(row, column,new Barrel());
                 }
             }
         }
 
         //slenderman
-        areaMatrix[4][1] = new Field(4, 1,true, 8);
+        areaMatrix[4][1] = new Field(4, 1,new SlenderMan());
 
         //játékos
-        areaMatrix[9][4] = new Field(9, 4,true, 9);
+        areaMatrix[9][4] = new Field(9, 4,new Player());
 
         //házon való átjárás
-        areaMatrix[8][12] = new Field(8, 12, false, 0); //bejárat
-        areaMatrix[7][12] = new Field(7, 12, false, 0);
-        areaMatrix[6][12] = new Field(6, 12, false, 0);
-        areaMatrix[5][12] = new Field(5, 12, false, 0);
-        areaMatrix[4][12] = new Field(4, 12, false, 0);
-        areaMatrix[3][12] = new Field(3, 12, false, 0);
-        areaMatrix[3][11] = new Field(3, 11, false, 0);
-        areaMatrix[3][10] = new Field(3, 10, false, 0);
-        areaMatrix[3][9] = new Field(3, 9, false, 0);
-        areaMatrix[3][8] = new Field(3, 8, false, 0); //kijárat
+        areaMatrix[8][12] = new Field(8, 12, new EmptyField()); //bejárat
+        areaMatrix[7][12] = new Field(7, 12,  new EmptyField());
+        areaMatrix[6][12] = new Field(6, 12,  new EmptyField());
+        areaMatrix[5][12] = new Field(5, 12,  new EmptyField());
+        areaMatrix[4][12] = new Field(4, 12,  new EmptyField());
+        areaMatrix[3][12] = new Field(3, 12,  new EmptyField());
+        areaMatrix[3][11] = new Field(3, 11,  new EmptyField());
+        areaMatrix[3][10] = new Field(3, 10,  new EmptyField());
+        areaMatrix[3][9] = new Field(3, 9,  new EmptyField());
+        areaMatrix[3][8] = new Field(3, 8,  new EmptyField()); //kijárat
 
     }
 
@@ -150,13 +154,13 @@ public class GameMap {
                 "9 - Játekos");
 
         System.out.println("-----------------------------");
-        for (int row = 0; row < areaMatrix.length; row++) {
-            for (int column = 0; column < areaMatrix[row].length; column++) {
-                if (areaMatrix[row][column].getOwnerId() == 8) {
+        for (Field[] matrix : areaMatrix) {
+            for (Field field : matrix) {
+                if (field.getOwnerId() == 8) {
 
                     System.out.print("0 ");
                 } else {
-                    System.out.print(areaMatrix[row][column] + " ");
+                    System.out.print(field + " ");
                 }
 
             }
@@ -179,43 +183,50 @@ public class GameMap {
 
         //zseblámpa fénye
         System.out.println();
-        for (int row = 0; row < areaMatrix.length; row++) {
-            for (int column = 0; column < areaMatrix[row].length; column++) {
+        for (Field[] matrix : areaMatrix) {
+            for (Field field : matrix) {
 
-                w = areaMatrix[row][column].getOwnerId() == actualPosition.getOwnerId() ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() - 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() - 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() - 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 1 ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() - 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 1;
+                w = field.getOwnerId() == actualPosition.getOwnerId() ||
+                        field.getRow() == actualPosition.getRow() - 1 && field.getColumn() == actualPosition.getColumn() ||
+                        field.getRow() == actualPosition.getRow() - 2 && field.getColumn() == actualPosition.getColumn() ||
+                        field.getRow() == actualPosition.getRow() - 2 && field.getColumn() == actualPosition.getColumn() - 1 ||
+                        field.getRow() == actualPosition.getRow() - 2 && field.getColumn() == actualPosition.getColumn() + 1;
 
-                a = areaMatrix[row][column].getOwnerId() == actualPosition.getOwnerId() ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 1 ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 2 ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() - 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 2 ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 2;
+                a = field.getOwnerId() == actualPosition.getOwnerId() ||
+                        field.getRow() == actualPosition.getRow() && field.getColumn() == actualPosition.getColumn() - 1 ||
+                        field.getRow() == actualPosition.getRow() && field.getColumn() == actualPosition.getColumn() - 2 ||
+                        field.getRow() == actualPosition.getRow() - 1 && field.getColumn() == actualPosition.getColumn() - 2 ||
+                        field.getRow() == actualPosition.getRow() + 1 && field.getColumn() == actualPosition.getColumn() - 2;
 
-                s = areaMatrix[row][column].getOwnerId() == actualPosition.getOwnerId() ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() - 1 ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 2 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 1;
+                s = field.getOwnerId() == actualPosition.getOwnerId() ||
+                        field.getRow() == actualPosition.getRow() + 1 && field.getColumn() == actualPosition.getColumn() ||
+                        field.getRow() == actualPosition.getRow() + 2 && field.getColumn() == actualPosition.getColumn() ||
+                        field.getRow() == actualPosition.getRow() + 2 && field.getColumn() == actualPosition.getColumn() - 1 ||
+                        field.getRow() == actualPosition.getRow() + 2 && field.getColumn() == actualPosition.getColumn() + 1;
 
-                d = areaMatrix[row][column].getOwnerId() == actualPosition.getOwnerId() ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 1 ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2 ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() - 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2 ||
-                    areaMatrix[row][column].getRow() == actualPosition.getRow() + 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2;
-
+                d = field.getOwnerId() == actualPosition.getOwnerId() ||
+                        field.getRow() == actualPosition.getRow() && field.getColumn() == actualPosition.getColumn() + 1 ||
+                        field.getRow() == actualPosition.getRow() && field.getColumn() == actualPosition.getColumn() + 2 ||
+                        field.getRow() == actualPosition.getRow() - 1 && field.getColumn() == actualPosition.getColumn() + 2 ||
+                        field.getRow() == actualPosition.getRow() + 1 && field.getColumn() == actualPosition.getColumn() + 2;
 
 
                 switch (this.getLastDirection()) {
-                    case "w": actual = w; break;
-                    case "a": actual = a; break;
-                    case "s": actual = s; break;
-                    case "d": actual = d; break;
+                    case "w":
+                        actual = w;
+                        break;
+                    case "a":
+                        actual = a;
+                        break;
+                    case "s":
+                        actual = s;
+                        break;
+                    case "d":
+                        actual = d;
+                        break;
                 }
                 if (actual) {
-                    System.out.print(areaMatrix[row][column] + " ");
+                    System.out.print(field + " ");
                 } else {
                     System.out.print("  ");
                 }

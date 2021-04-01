@@ -5,10 +5,7 @@ import gameElements.Field;
 
 public class FieldObject extends FieldElement {
 
-    public Field[][] reservedFieldArray;
-
-    public FieldObject(int id, boolean canContainPaper, boolean isInteroperable, Field[][] reservedFieldArray) {
+    public FieldObject(int id, boolean canContainPaper, boolean isInteroperable) {
         super(id, canContainPaper, isInteroperable);
-        this.reservedFieldArray = reservedFieldArray;
     }
 }

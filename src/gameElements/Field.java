@@ -1,19 +1,22 @@
 package gameElements;
 
+import fieldElements.FieldElement;
+
 public class Field {
 
     private int row;
     private int column;
     private boolean isReserved;
+    private boolean canContainPaper;
     private int ownerId;
 
-    public Field(int row, int column, boolean isReserved, int ownerId) {
-
+    public Field(int row, int column, FieldElement element) {
 
         this.row = row;
         this.column = column;
-        this.isReserved = isReserved;
-        this.ownerId = ownerId;
+        this.isReserved = !element.isInteroperable;
+        this.canContainPaper = element.canContainPaper;
+        this.ownerId = element.id;
     }
 
     public int getRow() {
@@ -51,9 +54,7 @@ public class Field {
     @Override
     public String toString() {
 
-        String back = "" + this.ownerId;
-
-        return back;
+        return "" + this.ownerId;
 
     }
 }

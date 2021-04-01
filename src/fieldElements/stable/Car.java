@@ -4,7 +4,7 @@ import gameElements.Field;
 
 public class Car extends FieldObject {
 
-    public Car(boolean containsPaper, boolean isInteroperable, Field[][] reservedFieldArray) {
-        super(4, containsPaper, isInteroperable, reservedFieldArray);
+    public Car() {
+        super(4, true, true);
     }
 }
