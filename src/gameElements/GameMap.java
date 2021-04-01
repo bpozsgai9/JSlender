@@ -119,15 +119,62 @@ public class GameMap {
 
         //játékos
         areaMatrix[9][4] = new Field(9, 4,true, 9);
+
+        //házon való átjárás
+        areaMatrix[8][12] = new Field(8, 12, false, 0); //bejárat
+        areaMatrix[7][12] = new Field(7, 12, false, 0);
+        areaMatrix[6][12] = new Field(6, 12, false, 0);
+        areaMatrix[5][12] = new Field(5, 12, false, 0);
+        areaMatrix[4][12] = new Field(4, 12, false, 0);
+        areaMatrix[3][12] = new Field(3, 12, false, 0);
+        areaMatrix[3][11] = new Field(3, 11, false, 0);
+        areaMatrix[3][10] = new Field(3, 10, false, 0);
+        areaMatrix[3][9] = new Field(3, 9, false, 0);
+        areaMatrix[3][8] = new Field(3, 8, false, 0); //kijárat
+
+    }
+
+    public void printCleanMap(Field [][] areaMatrix) {
+
+        System.out.println("\nTérkép:");
+        System.out.println("" +
+                "0 - Átjárható terület\n" +
+                "1 - Kis méretű fa\n" +
+                "2 - Nagy méretű fa\n" +
+                "3 - Ház\n" +
+                "4 - Autó\n" +
+                "5 - Teherautó\n" +
+                "6 - Szikla\n" +
+                "7 - Hordó\n" +
+                "8 - Slenderman\n" +
+                "9 - Játekos");
+
+        System.out.println("-----------------------------");
+        for (int row = 0; row < areaMatrix.length; row++) {
+            for (int column = 0; column < areaMatrix[row].length; column++) {
+                if (areaMatrix[row][column].getOwnerId() == 8) {
+
+                    System.out.print("0 ");
+                } else {
+                    System.out.print(areaMatrix[row][column] + " ");
+                }
+
+            }
+            System.out.println();
+        }
+        System.out.println("-----------------------------");
+
     }
 
     public void printMap(Field [][] areaMatrix) {
 
+        boolean houseInside;
         boolean w;
         boolean a;
         boolean s;
         boolean d;
         boolean actual = true;
+
         Field actualPosition = getPlayerActualPosition(areaMatrix);
 
         //zseblámpa fénye
@@ -159,6 +206,8 @@ public class GameMap {
                     areaMatrix[row][column].getRow() == actualPosition.getRow() - 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2 ||
                     areaMatrix[row][column].getRow() == actualPosition.getRow() + 1 && areaMatrix[row][column].getColumn() == actualPosition.getColumn() + 2;
 
+
+
                 switch (this.getLastDirection()) {
                     case "w": actual = w; break;
                     case "a": actual = a; break;
@@ -180,7 +229,7 @@ public class GameMap {
 
         System.out.println("A te játékosod azonosítója: [9]");
         System.out.println("Merre szeretnél lépni?");
-        System.out.println("\tw - felfele\n\ta - balra\n\ts - lefele\n\td - jobbra");
+        System.out.println("\tw - felfele\n\ta - balra\n\ts - lefele\n\td - jobbra\n\tm - térkép");
         System.out.print("Válasz: ");
         Scanner scanner = new Scanner(System.in);
         String readData = scanner.next();
@@ -196,6 +245,9 @@ public class GameMap {
                 break;
             case "d":
                 changeLocation("d", areaMatrix);
+                break;
+            case "m":
+                printCleanMap(areaMatrix);
                 break;
             default:
                 System.out.println("Nincs ilyen opció!");
@@ -222,8 +274,6 @@ public class GameMap {
         for (int row = 0; row < areaMatrix.length; row++) {
             for (int column = 0; column < areaMatrix[row].length; column++) {
 
-                //TODO: befejezi a térképről való lelépést
-                //outOfMap = row - 1 == -1 || row + 1 == 15 || column - 1 == -1 || column + 1 == 15;
                 outOfMapTop = row - 1 == -1;
                 outOfMapLeft = column - 1 == -1;
                 outOfMapBottom = row + 1 == 15;
