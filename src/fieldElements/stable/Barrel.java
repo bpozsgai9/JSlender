@@ -1,8 +1,8 @@
 package fieldElements.stable;
 
-import gameElements.Field;
+import fieldElements.FieldElement;
 
-public class Barrel extends FieldObject {
+public class Barrel extends FieldElement {
 
     public Barrel() {
         super(7, true, true);

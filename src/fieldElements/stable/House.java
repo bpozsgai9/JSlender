@@ -1,8 +1,8 @@
 package fieldElements.stable;
 
-import gameElements.Field;
+import fieldElements.FieldElement;
 
-public class House extends FieldObject {
+public class House extends FieldElement {
 
     public House() {
         //átjárás belekavarhat!!!

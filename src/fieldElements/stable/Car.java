@@ -1,8 +1,8 @@
 package fieldElements.stable;
 
-import gameElements.Field;
+import fieldElements.FieldElement;
 
-public class Car extends FieldObject {
+public class Car extends FieldElement {
 
     public Car() {
         super(4, true, true);

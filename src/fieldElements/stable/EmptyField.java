@@ -1,8 +1,8 @@
 package fieldElements.stable;
 
-import gameElements.Field;
+import fieldElements.FieldElement;
 
-public class EmptyField extends FieldObject {
+public class EmptyField extends FieldElement {
 
     public EmptyField() {
         super(0, true, true);

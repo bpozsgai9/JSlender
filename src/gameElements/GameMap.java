@@ -7,12 +7,13 @@ import fieldElements.stable.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class GameMap {
 
     private int remainingPaperNumber;
-    private Field[][] areaMatrix;
+    private final Field[][] areaMatrix;
     private String lastDirection;
 
     public GameMap() {
@@ -21,6 +22,7 @@ public class GameMap {
         this.areaMatrix = new Field[15][15];
         this.lastDirection = "w";
         generateMap(this.areaMatrix);
+        System.out.println(Arrays.deepToString(this.areaMatrix));
         printMap(this.areaMatrix);
         System.out.println(
                 "\nA holdfény alig szűrődött a sűrű lombos fákon keresztül, az erdő sötét volt és magányos." +
@@ -38,7 +40,7 @@ public class GameMap {
         printMap(this.areaMatrix);
         System.out.println(
                 "\nA holdfény alig szűrődött a sűrű lombos fákon keresztül, az erdő sötét volt és magányos." +
-                        "\nA távolból csak némi moraj hallatszott a csenden túl, a szél susogása, a levelek zaja..."
+                "\nA távolból csak némi moraj hallatszott a csenden túl, a szél susogása, a levelek zaja..."
         );
         System.out.println("\nFennmaradó papírok száma: " + this.remainingPaperNumber);
     }
@@ -47,17 +49,10 @@ public class GameMap {
         return remainingPaperNumber;
     }
 
-    public void setRemainingPaperNumber(int remainingPaperNumber) {
-        this.remainingPaperNumber = remainingPaperNumber;
-    }
-
     public Field[][] getAreaMatrix() {
         return areaMatrix;
     }
 
-    public void setAreaMatrix(Field[][] areaMatrix) {
-        this.areaMatrix = areaMatrix;
-    }
 
     public String getLastDirection() { return lastDirection; }
 
@@ -100,8 +95,10 @@ public class GameMap {
                 if (
                     //nagy méretű fa
                     row > 12 && row <= 14 && /*column >= 0 &&*/ column < 2 ||
+                    row > 12 && row <= 14 && column > 3 && column < 6 ||
                     row > 9 && row < 12 && column > 4 && column < 7 ||
                     row > 8 && row < 11 && column > 12 && column <= 14
+
                 ) {
                     areaMatrix[row][column] = new Field(row, column, new LargeSizeTree());
                 } else if (
@@ -155,10 +152,8 @@ public class GameMap {
 
     }
 
-    //TODO: befejezni a beolvasott mátrixot
     private void generateMapViaFile(String fileName, Field [][] areaMatrix) {
 
-        //TODO: FIX THIS
         try {
 
             FileReader fr = new FileReader(fileName);
@@ -171,7 +166,7 @@ public class GameMap {
                 for (int j = 0; j < data.length; j++) {
 
                     FieldElement element = null;
-                    switch (Integer.parseInt(data[0])) {
+                    switch (Integer.parseInt(data[j])) {
                         case 0 : element = new EmptyField(); break;
                         case 1 : element = new SmallSizeTree(); break;
                         case 2 : element = new LargeSizeTree(); break;

@@ -1,8 +1,8 @@
 package fieldElements.stable;
 
-import gameElements.Field;
+import fieldElements.FieldElement;
 
-public class LargeSizeTree extends FieldObject {
+public class LargeSizeTree extends FieldElement {
 
     public LargeSizeTree() {
         super(2, true, false);
