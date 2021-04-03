@@ -1,9 +1,12 @@
 package gameElements;
 
+import fieldElements.FieldElement;
 import fieldElements.movable.Player;
 import fieldElements.movable.SlenderMan;
 import fieldElements.stable.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class GameMap {
@@ -22,6 +25,20 @@ public class GameMap {
         System.out.println(
                 "\nA holdfény alig szűrődött a sűrű lombos fákon keresztül, az erdő sötét volt és magányos." +
                 "\nA távolból csak némi moraj hallatszott a csenden túl, a szél susogása, a levelek zaja..."
+        );
+        System.out.println("\nFennmaradó papírok száma: " + this.remainingPaperNumber);
+    }
+
+    public GameMap(String fileName) {
+
+        this.remainingPaperNumber = 8;
+        this.areaMatrix = new Field[15][15];
+        this.lastDirection = "w";
+        generateMapViaFile(fileName, this.areaMatrix);
+        printMap(this.areaMatrix);
+        System.out.println(
+                "\nA holdfény alig szűrődött a sűrű lombos fákon keresztül, az erdő sötét volt és magányos." +
+                        "\nA távolból csak némi moraj hallatszott a csenden túl, a szél susogása, a levelek zaja..."
         );
         System.out.println("\nFennmaradó papírok száma: " + this.remainingPaperNumber);
     }
@@ -113,7 +130,7 @@ public class GameMap {
                         //hordó
                         row > 2 && row < 5 && column > 2 && column < 7
                 ) {
-                    areaMatrix[row][column] = new Field(row, column,new Barrel());
+                    areaMatrix[row][column] = new Field(row, column, new Barrel());
                 }
             }
         }
@@ -138,6 +155,54 @@ public class GameMap {
 
     }
 
+    //TODO: befejezni a beolvasott mátrixot
+    private void generateMapViaFile(String fileName, Field [][] areaMatrix) {
+
+        //TODO: FIX THIS
+        try {
+
+            FileReader fr = new FileReader(fileName);
+            BufferedReader br = new BufferedReader(fr);
+            String line = br.readLine();
+            int i = 0;
+            while (line != null) {
+
+                String[] data = line.split(";");
+                for (int j = 0; j < data.length; j++) {
+
+                    FieldElement element = null;
+                    switch (Integer.parseInt(data[0])) {
+                        case 0 : element = new EmptyField(); break;
+                        case 1 : element = new SmallSizeTree(); break;
+                        case 2 : element = new LargeSizeTree(); break;
+                        case 3 : element = new House(); break;
+                        case 4 : element = new Car(); break;
+                        case 5 : element = new Truck(); break;
+                        case 6 : element = new Rock(); break;
+                        case 7 : element = new Barrel(); break;
+                        case 8 : element = new SlenderMan(); break;
+                        case 9 : element = new Player(); break;
+                        default:
+                            System.out.println("Hiba: Nem megfelelő beolvasott érték!");
+                            System.exit(1);
+                            break;
+                    }
+                    areaMatrix[i][j] = new Field(i, j, element);
+                }
+                line = br.readLine();
+                i++;
+            }
+            br.close();
+            fr.close();
+
+        } catch (Exception e) {
+
+            System.out.println("Hiba: " + e);
+            e.printStackTrace();
+        }
+
+    }
+
     public void printCleanMap(Field [][] areaMatrix) {
 
         System.out.println("\nTérkép:");
@@ -157,28 +222,23 @@ public class GameMap {
         for (Field[] matrix : areaMatrix) {
             for (Field field : matrix) {
                 if (field.getOwnerId() == 8) {
-
                     System.out.print("0 ");
                 } else {
                     System.out.print(field + " ");
                 }
-
             }
             System.out.println();
         }
         System.out.println("-----------------------------");
-
     }
 
     public void printMap(Field [][] areaMatrix) {
 
-        boolean houseInside;
         boolean w;
         boolean a;
         boolean s;
         boolean d;
         boolean actual = true;
-
         Field actualPosition = getPlayerActualPosition(areaMatrix);
 
         //zseblámpa fénye
@@ -209,7 +269,6 @@ public class GameMap {
                         field.getRow() == actualPosition.getRow() && field.getColumn() == actualPosition.getColumn() + 2 ||
                         field.getRow() == actualPosition.getRow() - 1 && field.getColumn() == actualPosition.getColumn() + 2 ||
                         field.getRow() == actualPosition.getRow() + 1 && field.getColumn() == actualPosition.getColumn() + 2;
-
 
                 switch (this.getLastDirection()) {
                     case "w":
@@ -296,69 +355,69 @@ public class GameMap {
                     System.out.println();
                     switch (where) {
                         case "w":
-                            if (!outOfMapTop) {
-                                if (!(areaMatrix[row - 1][column].isReserved())) {
+                            if (outOfMapTop) {
+                                System.out.println(outOfMapError);
+                            } else {
+                                if (areaMatrix[row - 1][column].isReserved()) {
+                                    System.out.println(reservedError);
+                                } else {
 
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
                                     areaMatrix[row - 1][column].setOwnerId(9);
                                     areaMatrix[row - 1][column].setReserved(true);
                                     this.setLastDirection("w");
-                                } else {
-                                    System.out.println(reservedError);
                                 }
-                            } else {
-                                System.out.println(outOfMapError);
                             }
-                        break;
+                            break;
                         case "a":
-                            if (!outOfMapLeft) {
-                                if (!(areaMatrix[row][column - 1].isReserved())) {
+                            if (outOfMapLeft) {
+                                System.out.println(outOfMapError);
+                            } else {
+                                if (areaMatrix[row][column - 1].isReserved()) {
+                                    System.out.println(reservedError);
+                                } else {
 
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
                                     areaMatrix[row][column - 1].setOwnerId(9);
                                     areaMatrix[row][column - 1].setReserved(true);
                                     this.setLastDirection("a");
-                                } else {
-                                    System.out.println(reservedError);
                                 }
-                            } else {
-                                System.out.println(outOfMapError);
                             }
-                        break;
+                            break;
                         case "s":
-                            if (!outOfMapBottom) {
-                                if (!(areaMatrix[row + 1][column].isReserved())) {
+                            if (outOfMapBottom) {
+                                System.out.println(outOfMapError);
+                            } else {
+                                if (areaMatrix[row + 1][column].isReserved()) {
+                                    System.out.println(reservedError);
+                                } else {
 
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
                                     areaMatrix[row + 1][column].setOwnerId(9);
                                     areaMatrix[row + 1][column].setReserved(true);
                                     this.setLastDirection("s");
-                                } else {
-                                    System.out.println(reservedError);
                                 }
-                            } else {
-                                System.out.println(outOfMapError);
                             }
-                        break;
+                            break;
                         case "d":
-                            if (!outOfMapRight) {
-                                if (!(areaMatrix[row][column + 1].isReserved())) {
+                            if (outOfMapRight) {
+                                System.out.println(outOfMapError);
+                            } else {
+                                if (areaMatrix[row][column + 1].isReserved()) {
+                                    System.out.println(reservedError);
+                                } else {
 
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
                                     areaMatrix[row][column + 1].setOwnerId(9);
                                     areaMatrix[row][column + 1].setReserved(true);
                                     this.setLastDirection("d");
-                                } else {
-                                    System.out.println(reservedError);
                                 }
-                            } else {
-                                System.out.println(outOfMapError);
                             }
-                        break;
+                            break;
                     }
                     return;
                 }

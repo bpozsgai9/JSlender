@@ -6,9 +6,11 @@ import gameElements.Field;
 public abstract class MovableFigure extends FieldElement {
 
     private Field position;
+    protected boolean canContainPaper;
+    protected boolean isInteroperable;
 
     public MovableFigure(int id, boolean canContainPaper, boolean isInteroperable) {
-        super(id, canContainPaper, isInteroperable);
+        super(id);
     }
 
     public void reserveField(Field reservable) {

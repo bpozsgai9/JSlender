@@ -6,9 +6,7 @@ public class FieldElement {
     public boolean canContainPaper;
     public boolean isInteroperable;
 
-    public FieldElement(int id, boolean canContainPaper, boolean isInteroperable) {
+    public FieldElement(int id) {
         this.id = id;
-        this.canContainPaper = canContainPaper;
-        this.isInteroperable = isInteroperable;
     }
 }

@@ -43,7 +43,7 @@ public class Game {
                 "\nDe légy óvatos! Lehet, hogy nem vagy egyedül..."
         );
         System.out.println("\nA folytatáshoz válassz egy lehetőséget!");
-        System.out.println("Menü:\n\t1 - Új játék\n\t2 - Kilépés");
+        System.out.println("Menü:\n\t1 - Új játék\n\t2 - Pálya beolvasása fájlból\n\t3 - Kilépés");
         Scanner scanner = new Scanner(System.in);
         int readData;
         do {
@@ -54,6 +54,11 @@ public class Game {
                     play(new GameMap());
                     break;
                 case 2:
+                    System.out.println("Kérlek adj meg egy elérési útvonalat!\nFigyelj oda hogy a fájlod pontosvesszőkkel legyen elválasztva és a mérete 15x15-ös legyen!");
+                    String fileName = scanner.next();
+                    play(new GameMap("src/" + fileName));
+                    break;
+                case 3:
                     System.exit(0);
                     break;
                 default:
