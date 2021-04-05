@@ -8,6 +8,7 @@ import fieldElements.stable.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameMap {
 
@@ -147,10 +148,10 @@ public class GameMap {
         }
 
         //slenderman
-        areaMatrix[4][1] = new Field(4, 1,new SlenderMan());
+        areaMatrix[4][1] = new Field(4, 1, new SlenderMan());
 
         //játékos
-        areaMatrix[9][4] = new Field(9, 4,new Player());
+        areaMatrix[9][4] = new Field(9, 4, new Player());
 
         //házon való átjárás
         areaMatrix[8][12] = new Field(8, 12, new EmptyField()); //bejárat
@@ -252,11 +253,11 @@ public class GameMap {
         System.out.println("-----------------------------");
         for (Field[] matrix : areaMatrix) {
             for (Field field : matrix) {
-                if (field.getOwnerId() == 8) {
+                /*if (field.getOwnerId() == 8) {
                     System.out.print("0 ");
-                } else {
+                } else {*/
                     System.out.print(field + " ");
-                }
+                //}
             }
             System.out.println();
         }
@@ -531,34 +532,88 @@ public class GameMap {
         }
     }
 
-    //TODO: bef, a slenderman pozíciója nem jó
+    //TODO: FIX
     public void changeSlendermanPosition(int remainingPaperNumber) {
 
         Field slendermanPosition = getSlendermanActualPosition(this.getAreaMatrix());
         Field playerPosition = getPlayerActualPosition(this.getAreaMatrix());
+        int random;
+        int random2;
+        if (remainingPaperNumber == 8 || remainingPaperNumber == 7) {
 
-        switch (remainingPaperNumber) {
-            case 7:
-                break;
-            case 6:
-                break;
-            case 5:
-                break;
-            case 4:
-                break;
-            case 3:
-                break;
-            case 2:
-                break;
-            case 1:
-                break;
-        }
-        if (
-                playerPosition.getRow() == slendermanPosition.getRow() &&
-                playerPosition.getColumn() == slendermanPosition.getColumn()
-        ) {
-            this.areyouWon = false;
-            this.remainingPaperNumber = 0;
+            this.areaMatrix[slendermanPosition.getRow()][slendermanPosition.getColumn()] =
+                    new Field(slendermanPosition.getRow(), slendermanPosition.getColumn(), new EmptyField());
+            random = ThreadLocalRandom.current().nextInt(5, 14 + 1);
+            random2 = ThreadLocalRandom.current().nextInt(5, 14 + 1);
+            slendermanPosition.setRow(random);
+            slendermanPosition.setColumn(random2);
+            if (
+                    playerPosition.getRow() == slendermanPosition.getRow() &&
+                    playerPosition.getColumn() == slendermanPosition.getColumn()
+            ) {
+                this.areyouWon = false;
+                this.remainingPaperNumber = 0;
+            }
+            this.areaMatrix[slendermanPosition.getRow()][slendermanPosition.getColumn()] =
+                    new Field(slendermanPosition.getRow(), slendermanPosition.getColumn(), new SlenderMan());
+
+
+        } else if (remainingPaperNumber == 6 || remainingPaperNumber == 5) {
+
+            this.areaMatrix[slendermanPosition.getRow()][slendermanPosition.getColumn()] =
+                    new Field(slendermanPosition.getRow(), slendermanPosition.getColumn(), new EmptyField());
+            random = ThreadLocalRandom.current().nextInt(0, 5 + 1);
+            random2 = ThreadLocalRandom.current().nextInt(0, 5 + 1);
+            slendermanPosition.setRow(random);
+            slendermanPosition.setColumn(random2);
+            if (
+                    playerPosition.getRow() == slendermanPosition.getRow() &&
+                            playerPosition.getColumn() == slendermanPosition.getColumn()
+            ) {
+                this.areyouWon = false;
+                this.remainingPaperNumber = 0;
+            }
+            this.areaMatrix[slendermanPosition.getRow()][slendermanPosition.getColumn()] =
+                    new Field(slendermanPosition.getRow(), slendermanPosition.getColumn(), new SlenderMan());
+
+
+        } else if (remainingPaperNumber == 4 || remainingPaperNumber == 3) {
+
+            this.areaMatrix[slendermanPosition.getRow()][slendermanPosition.getColumn()] =
+                    new Field(slendermanPosition.getRow(), slendermanPosition.getColumn(), new EmptyField());
+            random = ThreadLocalRandom.current().nextInt(0, 4 + 1);
+            random2 = ThreadLocalRandom.current().nextInt(0, 4 + 1);
+            slendermanPosition.setRow(random);
+            slendermanPosition.setColumn(random2);
+            if (
+                    playerPosition.getRow() == slendermanPosition.getRow() &&
+                            playerPosition.getColumn() == slendermanPosition.getColumn()
+            ) {
+                this.areyouWon = false;
+                this.remainingPaperNumber = 0;
+            }
+            this.areaMatrix[slendermanPosition.getRow()][slendermanPosition.getColumn()] =
+                    new Field(slendermanPosition.getRow(), slendermanPosition.getColumn(), new SlenderMan());
+
+
+        } else if (remainingPaperNumber == 1 || remainingPaperNumber == 2) {
+
+            this.areaMatrix[slendermanPosition.getRow()][slendermanPosition.getColumn()] =
+                    new Field(slendermanPosition.getRow(), slendermanPosition.getColumn(), new EmptyField());
+            random = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+            random2 = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+            slendermanPosition.setRow(random);
+            slendermanPosition.setColumn(random2);
+            if (
+                    playerPosition.getRow() == slendermanPosition.getRow() &&
+                    playerPosition.getColumn() == slendermanPosition.getColumn()
+            ) {
+                this.areyouWon = false;
+                this.remainingPaperNumber = 0;
+            }
+            this.areaMatrix[slendermanPosition.getRow()][slendermanPosition.getColumn()] =
+                    new Field(slendermanPosition.getRow(), slendermanPosition.getColumn(), new SlenderMan());
+
         }
     }
 }

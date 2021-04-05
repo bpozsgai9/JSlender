@@ -6,7 +6,7 @@ import gameElements.Field;
 public class SlenderMan extends FieldElement {
 
     public SlenderMan() {
-        super(8, false, false);
+        super(8, false, true);
     }
 
 }
