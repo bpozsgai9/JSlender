@@ -7,16 +7,18 @@ public class Field {
     private int row;
     private int column;
     private boolean isReserved;
-    private boolean canContainPaper;
+    private boolean containPaper;
     private int ownerId;
+    private FieldElement elementOnTop;
 
-    public Field(int row, int column, FieldElement element) {
+    public Field(int row, int column, FieldElement elementOnTop) {
 
         this.row = row;
         this.column = column;
-        this.isReserved = !element.isInteroperable;
-        this.canContainPaper = element.canContainPaper;
-        this.ownerId = element.id;
+        this.elementOnTop = elementOnTop;
+        this.isReserved = !this.elementOnTop.isInteroperable;
+        this.containPaper = false;
+        this.ownerId = this.elementOnTop.id;
     }
 
     public int getRow() {
@@ -49,6 +51,18 @@ public class Field {
 
     public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public boolean isContainPaper() {
+        return containPaper;
+    }
+
+    public void setContainPaper(boolean containPaper) {
+        this.containPaper = containPaper;
+    }
+
+    public FieldElement getElementOnTop() {
+        return elementOnTop;
     }
 
     @Override

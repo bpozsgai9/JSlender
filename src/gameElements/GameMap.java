@@ -7,7 +7,6 @@ import fieldElements.stable.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class GameMap {
@@ -22,7 +21,7 @@ public class GameMap {
         this.areaMatrix = new Field[15][15];
         this.lastDirection = "w";
         generateMap(this.areaMatrix);
-        System.out.println(Arrays.deepToString(this.areaMatrix));
+        //System.out.println(Arrays.deepToString(this.areaMatrix));
         printMap(this.areaMatrix);
         System.out.println(
                 "\nA holdfény alig szűrődött a sűrű lombos fákon keresztül, az erdő sötét volt és magányos." +
@@ -37,6 +36,7 @@ public class GameMap {
         this.areaMatrix = new Field[15][15];
         this.lastDirection = "w";
         generateMapViaFile(fileName, this.areaMatrix);
+        //System.out.println(Arrays.deepToString(this.areaMatrix));
         printMap(this.areaMatrix);
         System.out.println(
                 "\nA holdfény alig szűrődött a sűrű lombos fákon keresztül, az erdő sötét volt és magányos." +
@@ -150,6 +150,15 @@ public class GameMap {
         areaMatrix[3][9] = new Field(3, 9,  new EmptyField());
         areaMatrix[3][8] = new Field(3, 8,  new EmptyField()); //kijárat
 
+        //papírok helye
+        areaMatrix[3][7].setContainPaper(true);
+        areaMatrix[6][1].setContainPaper(true);
+        areaMatrix[6][7].setContainPaper(true);
+        areaMatrix[6][12].setContainPaper(true);
+        areaMatrix[8][4].setContainPaper(true);
+        areaMatrix[13][2].setContainPaper(true);
+        areaMatrix[13][8].setContainPaper(true);
+        areaMatrix[13][3].setContainPaper(true);
     }
 
     private void generateMapViaFile(String fileName, Field [][] areaMatrix) {
@@ -196,6 +205,19 @@ public class GameMap {
             e.printStackTrace();
         }
 
+        int counter = 8;
+        while (!(counter == 0)) {
+            int random = ((int)(15.0 * Math.random()));
+            int random2 = ((int)(15.0 * Math.random()));
+            if (
+                    !(areaMatrix[random][random2].isContainPaper()) &&
+                    areaMatrix[random][random2].getElementOnTop().canContainPaper
+            ) {
+                areaMatrix[random][random2].setContainPaper(true);
+                //System.out.println(random + ";" + random2);
+                counter--;
+            }
+        }
     }
 
     public void printCleanMap(Field [][] areaMatrix) {
@@ -238,32 +260,43 @@ public class GameMap {
 
         //zseblámpa fénye
         System.out.println();
+        int actualFieldRow;
+        int actualPositionRow;
+        int actualFieldColumn;
+        int actualPositionColumn;
+        boolean actualId;
         for (Field[] matrix : areaMatrix) {
             for (Field field : matrix) {
 
-                w = field.getOwnerId() == actualPosition.getOwnerId() ||
-                        field.getRow() == actualPosition.getRow() - 1 && field.getColumn() == actualPosition.getColumn() ||
-                        field.getRow() == actualPosition.getRow() - 2 && field.getColumn() == actualPosition.getColumn() ||
-                        field.getRow() == actualPosition.getRow() - 2 && field.getColumn() == actualPosition.getColumn() - 1 ||
-                        field.getRow() == actualPosition.getRow() - 2 && field.getColumn() == actualPosition.getColumn() + 1;
+                actualFieldRow = field.getRow();
+                actualPositionRow = actualPosition.getRow();
+                actualFieldColumn = field.getColumn();
+                actualPositionColumn = actualPosition.getColumn();
+                actualId = field.getOwnerId() == actualPosition.getOwnerId();
 
-                a = field.getOwnerId() == actualPosition.getOwnerId() ||
-                        field.getRow() == actualPosition.getRow() && field.getColumn() == actualPosition.getColumn() - 1 ||
-                        field.getRow() == actualPosition.getRow() && field.getColumn() == actualPosition.getColumn() - 2 ||
-                        field.getRow() == actualPosition.getRow() - 1 && field.getColumn() == actualPosition.getColumn() - 2 ||
-                        field.getRow() == actualPosition.getRow() + 1 && field.getColumn() == actualPosition.getColumn() - 2;
+                w = actualId ||
+                        actualFieldRow == actualPositionRow - 1 && actualFieldColumn == actualPositionColumn ||
+                        actualFieldRow == actualPositionRow - 2 && actualFieldColumn == actualPositionColumn ||
+                        actualFieldRow == actualPositionRow - 2 && actualFieldColumn == actualPositionColumn - 1 ||
+                        actualFieldRow == actualPositionRow - 2 && actualFieldColumn == actualPositionColumn + 1;
 
-                s = field.getOwnerId() == actualPosition.getOwnerId() ||
-                        field.getRow() == actualPosition.getRow() + 1 && field.getColumn() == actualPosition.getColumn() ||
-                        field.getRow() == actualPosition.getRow() + 2 && field.getColumn() == actualPosition.getColumn() ||
-                        field.getRow() == actualPosition.getRow() + 2 && field.getColumn() == actualPosition.getColumn() - 1 ||
-                        field.getRow() == actualPosition.getRow() + 2 && field.getColumn() == actualPosition.getColumn() + 1;
+                a = actualId ||
+                        actualFieldRow == actualPositionRow && actualFieldColumn == actualPositionColumn - 1 ||
+                        actualFieldRow == actualPositionRow && actualFieldColumn == actualPositionColumn - 2 ||
+                        actualFieldRow == actualPositionRow - 1 && actualFieldColumn == actualPositionColumn - 2 ||
+                        actualFieldRow == actualPositionRow + 1 && actualFieldColumn == actualPositionColumn - 2;
 
-                d = field.getOwnerId() == actualPosition.getOwnerId() ||
-                        field.getRow() == actualPosition.getRow() && field.getColumn() == actualPosition.getColumn() + 1 ||
-                        field.getRow() == actualPosition.getRow() && field.getColumn() == actualPosition.getColumn() + 2 ||
-                        field.getRow() == actualPosition.getRow() - 1 && field.getColumn() == actualPosition.getColumn() + 2 ||
-                        field.getRow() == actualPosition.getRow() + 1 && field.getColumn() == actualPosition.getColumn() + 2;
+                s = actualId ||
+                        actualFieldRow == actualPositionRow + 1 && actualFieldColumn == actualPositionColumn ||
+                        actualFieldRow == actualPositionRow + 2 && actualFieldColumn == actualPositionColumn ||
+                        actualFieldRow == actualPositionRow + 2 && actualFieldColumn == actualPositionColumn - 1 ||
+                        actualFieldRow == actualPositionRow + 2 && actualFieldColumn == actualPositionColumn + 1;
+
+                d = actualId ||
+                        actualFieldRow == actualPositionRow && actualFieldColumn == actualPositionColumn + 1 ||
+                        actualFieldRow == actualPositionRow && actualFieldColumn == actualPositionColumn + 2 ||
+                        actualFieldRow == actualPositionRow - 1 && actualFieldColumn == actualPositionColumn + 2 ||
+                        actualFieldRow == actualPositionRow + 1 && actualFieldColumn == actualPositionColumn + 2;
 
                 switch (this.getLastDirection()) {
                     case "w":
@@ -356,7 +389,10 @@ public class GameMap {
                                 if (areaMatrix[row - 1][column].isReserved()) {
                                     System.out.println(reservedError);
                                 } else {
-
+                                    if (areaMatrix[row - 1][column].isContainPaper()) {
+                                        System.out.println("Találtál egy papírt!");
+                                        this.remainingPaperNumber--;
+                                    }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
                                     areaMatrix[row - 1][column].setOwnerId(9);
@@ -372,7 +408,10 @@ public class GameMap {
                                 if (areaMatrix[row][column - 1].isReserved()) {
                                     System.out.println(reservedError);
                                 } else {
-
+                                    if (areaMatrix[row][column - 1].isContainPaper()) {
+                                        System.out.println("Találtál egy papírt!");
+                                        this.remainingPaperNumber--;
+                                    }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
                                     areaMatrix[row][column - 1].setOwnerId(9);
@@ -388,7 +427,10 @@ public class GameMap {
                                 if (areaMatrix[row + 1][column].isReserved()) {
                                     System.out.println(reservedError);
                                 } else {
-
+                                    if (areaMatrix[row + 1][column].isContainPaper()) {
+                                        System.out.println("Találtál egy papírt!");
+                                        this.remainingPaperNumber--;
+                                    }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
                                     areaMatrix[row + 1][column].setOwnerId(9);
@@ -404,7 +446,10 @@ public class GameMap {
                                 if (areaMatrix[row][column + 1].isReserved()) {
                                     System.out.println(reservedError);
                                 } else {
-
+                                    if (areaMatrix[row][column + 1].isContainPaper()) {
+                                        System.out.println("Találtál egy papírt!");
+                                        this.remainingPaperNumber--;
+                                    }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
                                     areaMatrix[row][column + 1].setOwnerId(9);
