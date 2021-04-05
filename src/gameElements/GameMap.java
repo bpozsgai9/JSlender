@@ -27,7 +27,6 @@ public class GameMap {
                 "\nA holdfény alig szűrődött a sűrű lombos fákon keresztül, az erdő sötét volt és magányos." +
                 "\nA távolból csak némi moraj hallatszott a csenden túl, a szél susogása, a levelek zaja..."
         );
-        System.out.println("\nFennmaradó papírok száma: " + this.remainingPaperNumber);
     }
 
     public GameMap(String fileName) {
@@ -42,7 +41,6 @@ public class GameMap {
                 "\nA holdfény alig szűrődött a sűrű lombos fákon keresztül, az erdő sötét volt és magányos." +
                 "\nA távolból csak némi moraj hallatszott a csenden túl, a szél susogása, a levelek zaja..."
         );
-        System.out.println("\nFennmaradó papírok száma: " + this.remainingPaperNumber);
     }
 
     public int getRemainingPaperNumber() {
@@ -325,7 +323,7 @@ public class GameMap {
 
     public void controlOverMap(Field [][] areaMatrix) {
 
-        System.out.println("A te játékosod azonosítója: [9]");
+        System.out.println("\nA te játékosod azonosítója: [9]");
         System.out.println("Merre szeretnél lépni?");
         System.out.println("\tw - felfele\n\ta - balra\n\ts - lefele\n\td - jobbra\n\tm - térkép\n\tk - kilépés");
         System.out.print("Válasz: ");
@@ -368,10 +366,15 @@ public class GameMap {
                 "\nHiba: Erre nem léphetsz itt a pálya vége!" +
                 "\n-----------------------------------------";
 
+        String paperBeenFound =
+                "--------------------------------------------" +
+                "\n\t\t\tTaláltál egy papírt!" +
+                "\n--------------------------------------------";
         boolean outOfMapTop;
         boolean outOfMapLeft;
         boolean outOfMapBottom;
         boolean outOfMapRight;
+
         for (int row = 0; row < areaMatrix.length; row++) {
             for (int column = 0; column < areaMatrix[row].length; column++) {
 
@@ -390,8 +393,10 @@ public class GameMap {
                                     System.out.println(reservedError);
                                 } else {
                                     if (areaMatrix[row - 1][column].isContainPaper()) {
-                                        System.out.println("Találtál egy papírt!");
+                                        System.out.println(paperBeenFound);
                                         this.remainingPaperNumber--;
+                                        listenPaperChanges(this.remainingPaperNumber);
+                                        changeSlendermanPosition(areaMatrix[row - 1][column], this.remainingPaperNumber);
                                     }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
@@ -409,8 +414,10 @@ public class GameMap {
                                     System.out.println(reservedError);
                                 } else {
                                     if (areaMatrix[row][column - 1].isContainPaper()) {
-                                        System.out.println("Találtál egy papírt!");
+                                        System.out.println(paperBeenFound);
                                         this.remainingPaperNumber--;
+                                        listenPaperChanges(this.remainingPaperNumber);
+                                        changeSlendermanPosition(areaMatrix[row][column - 1], this.remainingPaperNumber);
                                     }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
@@ -428,8 +435,10 @@ public class GameMap {
                                     System.out.println(reservedError);
                                 } else {
                                     if (areaMatrix[row + 1][column].isContainPaper()) {
-                                        System.out.println("Találtál egy papírt!");
+                                        System.out.println(paperBeenFound);
                                         this.remainingPaperNumber--;
+                                        listenPaperChanges(this.remainingPaperNumber);
+                                        changeSlendermanPosition(areaMatrix[row + 1][column], this.remainingPaperNumber);
                                     }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
@@ -447,8 +456,10 @@ public class GameMap {
                                     System.out.println(reservedError);
                                 } else {
                                     if (areaMatrix[row][column + 1].isContainPaper()) {
-                                        System.out.println("Találtál egy papírt!");
+                                        System.out.println(paperBeenFound);
                                         this.remainingPaperNumber--;
+                                        listenPaperChanges(this.remainingPaperNumber);
+                                        changeSlendermanPosition(areaMatrix[row][column + 1], this.remainingPaperNumber);
                                     }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
@@ -463,5 +474,50 @@ public class GameMap {
                 }
             }
         }
+    }
+
+    public void listenPaperChanges(int remainingPaperNumber) {
+        switch (remainingPaperNumber) {
+            case 7:
+                System.out.println(
+                        "Mintha valami fénylene a zseblámpalámpa fényében..." +
+                        "\nEgy tépet füzetlap, rajta nagy betűkkel írva: SEGÍTSÉG!!!" +
+                        "\nKi hagyta ezt itt?"
+                );
+                break;
+            case 6:
+                System.out.println("Egy újabb lap, ezen az áll: HAGYJ EGYEDÜL! ");
+                break;
+            case 5:
+                System.out.println(
+                        "A távoli bozótban ismét ott egy papírlap." +
+                        "\nNE NÉZZ HÁTRA, KÜLÖNBEN ELVISZ!" +
+                        "\nMik ezek? Ez annyira nem vicces..."
+                );
+                break;
+            case 4:
+                System.out.println("Hirtelen a ez erdő még némábbnak tűnt mint eddig volt, de most valami megváltozott. " +
+                        "\nKözeledik..." +
+                        "\nFIGYEL TÉGED!");
+                break;
+            case 3:
+                System.out.println(
+                        "Na jól van most már elég...egy újabb lap." +
+                        "\nEz áll rajta: KÖVETNEK!"
+                );
+                break;
+            case 2:
+                System.out.println("NE NÉZZ HÁTRA!!!");
+                break;
+            case 1:
+                System.out.println("TAl\n\táN it\nT A v\tégE ??");
+                break;
+        }
+    }
+
+    //TODO: bef
+    public void changeSlendermanPosition(Field actualPosition, int remainingPaperNumber) {
+
+
     }
 }
