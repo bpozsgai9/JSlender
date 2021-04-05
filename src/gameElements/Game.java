@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class Game {
 
+    private String slenderPic;
+
     public Game() {
 
         //fő felirat
@@ -18,7 +20,7 @@ public class Game {
                 " \\__/  |___/  |____| |___| |_|\\_|  |___/  |___| |_|_\\ ";
 
         //slenderman ábra
-        String slenderMan =
+        this.slenderPic =
                 "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n" +
                 "░░░░░░░░░▄▄███▄░░░░░░░░░░░░░░░░░░░░░░░░░▄███▄░░░░░░░░\n" +
                 "░░░░░░░░░▄▄██▀▀░░░░░░░░▄█▀▀▀▀█▄░░░░░░▄██████▄░░░░░░░░\n" +
@@ -32,7 +34,7 @@ public class Game {
                 "░░░░░░░░░▀█████▀░░░░███░██████░███░░░░░░░░█░░░░░░░░░░";
 
         System.out.println(jSlenderLogo);
-        System.out.println(slenderMan);
+        System.out.println(this.slenderPic);
         System.out.println("-----------------------------------------------------");
         System.out.println("\t\t\tÜdvözöllek a JSlender-ben!");
         System.out.println("-----------------------------------------------------");
@@ -71,11 +73,19 @@ public class Game {
 
     public void play(GameMap actual) {
 
+        boolean areYouWon;
         do {
             actual.printMap(actual.getAreaMatrix());
             actual.controlOverMap(actual.getAreaMatrix());
             System.out.println("\nFennmaradó papírok száma: " + actual.getRemainingPaperNumber());
         } while (!(actual.getRemainingPaperNumber() == 0));
-        System.out.println("Sikeresen kijutottál az erdőből!\nMost az egyszer...");
+
+        areYouWon = actual.areyouWon();
+        if (areYouWon) {
+            System.out.println("Sikeresen kijutottál az erdőből!\nMost az egyszer...");
+        } else {
+            System.out.println("Elkapott...\n\n" + this.slenderPic);
+        }
+
     }
 }

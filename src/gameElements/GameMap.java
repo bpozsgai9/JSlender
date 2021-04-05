@@ -14,12 +14,14 @@ public class GameMap {
     private int remainingPaperNumber;
     private final Field[][] areaMatrix;
     private String lastDirection;
+    private boolean areyouWon;
 
     public GameMap() {
 
         this.remainingPaperNumber = 8;
         this.areaMatrix = new Field[15][15];
         this.lastDirection = "w";
+        this.areyouWon = true;
         generateMap(this.areaMatrix);
         //System.out.println(Arrays.deepToString(this.areaMatrix));
         printMap(this.areaMatrix);
@@ -51,8 +53,11 @@ public class GameMap {
         return areaMatrix;
     }
 
-
     public String getLastDirection() { return lastDirection; }
+
+    public boolean areyouWon() {
+        return areyouWon;
+    }
 
     public void setLastDirection(String lastDirection) { this.lastDirection = lastDirection; }
 
@@ -60,6 +65,17 @@ public class GameMap {
         for (Field[] matrix : areaMatrix) {
             for (Field field : matrix) {
                 if (field.getOwnerId() == 9) {
+                    return field;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Field getSlendermanActualPosition(Field [][] areaMatrix) {
+        for (Field[] matrix : areaMatrix) {
+            for (Field field : matrix) {
+                if (field.getOwnerId() == 8) {
                     return field;
                 }
             }
@@ -396,7 +412,7 @@ public class GameMap {
                                         System.out.println(paperBeenFound);
                                         this.remainingPaperNumber--;
                                         listenPaperChanges(this.remainingPaperNumber);
-                                        changeSlendermanPosition(areaMatrix[row - 1][column], this.remainingPaperNumber);
+                                        changeSlendermanPosition(this.remainingPaperNumber);
                                     }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
@@ -417,7 +433,7 @@ public class GameMap {
                                         System.out.println(paperBeenFound);
                                         this.remainingPaperNumber--;
                                         listenPaperChanges(this.remainingPaperNumber);
-                                        changeSlendermanPosition(areaMatrix[row][column - 1], this.remainingPaperNumber);
+                                        changeSlendermanPosition(this.remainingPaperNumber);
                                     }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
@@ -438,7 +454,7 @@ public class GameMap {
                                         System.out.println(paperBeenFound);
                                         this.remainingPaperNumber--;
                                         listenPaperChanges(this.remainingPaperNumber);
-                                        changeSlendermanPosition(areaMatrix[row + 1][column], this.remainingPaperNumber);
+                                        changeSlendermanPosition(this.remainingPaperNumber);
                                     }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
@@ -459,7 +475,7 @@ public class GameMap {
                                         System.out.println(paperBeenFound);
                                         this.remainingPaperNumber--;
                                         listenPaperChanges(this.remainingPaperNumber);
-                                        changeSlendermanPosition(areaMatrix[row][column + 1], this.remainingPaperNumber);
+                                        changeSlendermanPosition(this.remainingPaperNumber);
                                     }
                                     areaMatrix[row][column].setOwnerId(0);
                                     areaMatrix[row][column].setReserved(false);
@@ -515,9 +531,34 @@ public class GameMap {
         }
     }
 
-    //TODO: bef
-    public void changeSlendermanPosition(Field actualPosition, int remainingPaperNumber) {
+    //TODO: bef, a slenderman pozíciója nem jó
+    public void changeSlendermanPosition(int remainingPaperNumber) {
 
+        Field slendermanPosition = getSlendermanActualPosition(this.getAreaMatrix());
+        Field playerPosition = getPlayerActualPosition(this.getAreaMatrix());
 
+        switch (remainingPaperNumber) {
+            case 7:
+                break;
+            case 6:
+                break;
+            case 5:
+                break;
+            case 4:
+                break;
+            case 3:
+                break;
+            case 2:
+                break;
+            case 1:
+                break;
+        }
+        if (
+                playerPosition.getRow() == slendermanPosition.getRow() &&
+                playerPosition.getColumn() == slendermanPosition.getColumn()
+        ) {
+            this.areyouWon = false;
+            this.remainingPaperNumber = 0;
+        }
     }
 }
