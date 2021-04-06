@@ -47,28 +47,28 @@ public class Game {
         System.out.println("\nA folytatáshoz válassz egy lehetőséget!");
         System.out.println("Menü:\n\t1 - Új játék\n\t2 - Pálya beolvasása fájlból\n\t3 - Kilépés");
         Scanner scanner = new Scanner(System.in);
-        int readData;
+        String readData;
         do {
             System.out.print("Válasz: ");
-            readData = scanner.nextInt();
+            readData = scanner.next();
             switch (readData) {
-                case 1 :
+                case "1" :
                     play(new GameMap());
                     break;
-                case 2:
+                case "2":
                     System.out.println("Kérlek adj meg egy elérési útvonalat!\nFigyelj oda hogy a fájlod pontosvesszőkkel legyen elválasztva és a mérete 15x15-ös legyen!");
                     System.out.print("Válasz: ");
                     String fileName = scanner.next();
                     play(new GameMap("src/" + fileName));
                     break;
-                case 3:
+                case "3":
                     System.exit(0);
                     break;
                 default:
                     System.out.println("Kötelező opció!");
                     break;
             }
-        } while (!(readData == 1 || readData == 2));
+        } while (!(readData.equals("1") || readData.equals("2")));
     }
 
     public void play(GameMap actual) {
@@ -78,6 +78,8 @@ public class Game {
             actual.printMap(actual.getAreaMatrix());
             actual.controlOverMap(actual.getAreaMatrix());
             System.out.println("\nFennmaradó papírok száma: " + actual.getRemainingPaperNumber());
+            System.out.println("---------------------------");
+
         } while (!(actual.getRemainingPaperNumber() == 0));
 
         areYouWon = actual.areyouWon();
