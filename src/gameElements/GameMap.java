@@ -1,8 +1,7 @@
 package gameElements;
 
 import fieldElements.FieldElement;
-import fieldElements.movable.Player;
-import fieldElements.movable.SlenderMan;
+import fieldElements.movable.*;
 import fieldElements.stable.*;
 
 import java.io.BufferedReader;
