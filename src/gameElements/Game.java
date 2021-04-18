@@ -84,7 +84,8 @@ public class Game {
                     play(new GameMap());
                     break;
                 case "2":
-                    System.out.println("Kérlek adj meg egy elérési útvonalat!\nFigyelj oda hogy a fájlod pontosvesszőkkel legyen elválasztva és a mérete 15x15-ös legyen!");
+                    System.out.println("Kérlek adj meg egy fájl nevet! FONTOS: A beolvasás helye az src/ mappára mutat!" +
+                            "\nFigyelj oda hogy a fájlod pontosvesszőkkel legyen elválasztva és a mérete 15x15-ös legyen!");
                     System.out.println("Alapértelmezett /src mappában található - beolvas.txt");
                     System.out.print("Válasz: ");
                     String fileName = scanner.next();
