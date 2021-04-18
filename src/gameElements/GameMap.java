@@ -272,7 +272,7 @@ public class GameMap {
      *
      * Feladat:
      *
-     * - A paraméteres konstruktor függvénye, amely beolvassott txt fájlból geenerál pályát
+     * - A paraméteres konstruktor függvénye, amely beolvassott txt fájlból generál pályát
      * - Csak üres mátrixot kap
      */
     private void generateMapViaFile(String fileName, Field [][] areaMatrix) {
