@@ -34,7 +34,36 @@
 ###### Egyéb működéshez szükséges elemek
 >com.company/Main.java (futtatandó osztály)<br>
 >beolvas.txt (fájlbeolvasáshoz tartozó példafájl)
+
 ## Beüzemelést követően
+
+###### Osztály hierarchia:
+
+```
+com.company
+    Main
+    
+gameElements
+    Game
+    GameMap
+    Field
+    
+fieldElemets    
+    FieldElement
+    '->
+    movable
+        '-> Player
+        '-> SlenderMan
+    stable  
+        '-> Barrel
+        '-> Car
+        '-> EmptyField
+        '-> House
+        '-> LargeSizeTree
+        '-> Rock
+        '-> SmallSizeTree
+        '-> Truck
+```
 
 
 
