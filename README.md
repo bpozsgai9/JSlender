@@ -1,5 +1,5 @@
 # JSlender
-###### SZTE - Programozás 1. - Kötelező program
+###### SZTE - Programozás 1. - Kötelező program (feladat04.pdf)
 
 ```
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 
