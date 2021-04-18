@@ -26,6 +26,11 @@ public class Game {
     */
     public Game() {
 
+        String inputError =
+                "----------------------------" +
+                "\nHiba: Nincs ilyen opció!" +
+                "\n--------------------------";
+
         //fő felirat
         System.out.println("\n");
         String jSlenderLogo = "        (      (               )   (             (    \n" +
@@ -60,7 +65,12 @@ public class Game {
                 "A feladatod hogy 8 papírt összegyűjts az erdő mélyén. " +
                 "\nMagaddal vihetsz egy ZSEBLÁMPÁT ami VILÁGÍTJA neked az utat." +
                 "\nHa összegyűjtöd őket, talán sikerül megtudnod a titkot amit az erdő rejt." +
-                "\nDe légy óvatos! Lehet, hogy nem vagy egyedül..."
+                "\nDe légy óvatos! Lehet, hogy nem vagy egyedül..." +
+                "\n\nMIELŐTT ELINDÍTOD A JÁTÉKOT!" +
+                "\nJegyezd meg, a játékosod azonosító száma a [ 9 ]-es, ez jelzi ki az aktuális helyzeted," +
+                "\namit magadelőtt látsz háromszög alakban mezőket az a zseblámpád által megvilágított terület" +
+                "\namerre fordulsz arra fogsz látni a sötétségben!" +
+                "\nLépni adatbekéréssel tudsz, a játék tájékoztatni fog!"
         );
         System.out.println("\nA folytatáshoz válassz egy lehetőséget!");
         System.out.println("Menü:\n\t1 - Új játék\n\t2 - Pálya beolvasása fájlból\n\t3 - Kilépés");
@@ -84,7 +94,7 @@ public class Game {
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Kötelező opció!");
+                    System.out.println(inputError);
                     break;
             }
         } while (!(readData.equals("1") || readData.equals("2")));

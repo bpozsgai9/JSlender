@@ -471,6 +471,11 @@ public class GameMap {
      */
     public void controlOverMap(Field [][] areaMatrix) {
 
+        String inputError =
+                "----------------------------" +
+                "\nHiba: Nincs ilyen opció!" +
+                "\n--------------------------";
+
         System.out.println("\nA te játékosod azonosítója: [9]");
         System.out.println("Merre szeretnél lépni?");
         System.out.println("\tw - felfele\n\ta - balra\n\ts - lefele\n\td - jobbra\n\tm - térkép\n\tk - kilépés");
@@ -497,7 +502,7 @@ public class GameMap {
                 System.exit(0);
                     break;
             default:
-                System.out.println("Nincs ilyen opció!");
+                System.out.println(inputError);
                 break;
         }
     }
