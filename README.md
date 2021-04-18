@@ -1,7 +1,19 @@
 # JSlender
-
 ###### SZTE - Programozás 1. - Kötelező program
 
+```
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 
+░░░░░░░░░▄▄███▄░░░░░░░░░░░░░░░░░░░░░░░░░▄███▄░░░░░░░░
+░░░░░░░░░▄▄██▀▀░░░░░░░░▄█▀▀▀▀█▄░░░░░░▄██████▄░░░░░░░░
+░░░░░░░█████████▄░░░░░░█░░░░░▀█░░░░░░░▄▄▄▀█▀▀░░░░░░░░
+░░░░░░░░░▄███▀▀▀▀░░░░░░█░░░░░░█░░░░░░▀▀▀█████▄▄░░░░░░
+░░░░░░░▄▄███████▀░░░░░░█▄░░░░▄█░░░░░░▄█▀███▄██░░░░░░░
+░░░░░░░███████░░░░░░░░░░▀█░░█▀░░░░░██████████▄▄░░░░░░
+░░░░░░░███▄███▀▀▀░░░░░██▀▀██▀▀██░░░░░░░▀▀█████░░░░░░░
+░░░░░░░░░████▄▄▄░░░░░█████░█░████░░░░░▀▀█████░░░░░░░░
+░░░░░░░▀▀▀███▄▀▀░░░░███▀███░██▀███░░░░▀▀██████░░░░░░░
+░░░░░░░░░▀█████▀░░░░███░██████░███░░░░░░░░█░░░░░░░░░░
+```
 
 **Beüzemelés:** :electric_plug: 
 - A projekt intellJ IDE-ben készült, ehhez tartozó projektfájlt tartalmaz
@@ -64,6 +76,53 @@ fieldElemets
         '-> SmallSizeTree
         '-> Truck
 ```
+
+###### A játék működése:
+
+A feladatod hogy 8 papírt összegyűjts az erdő mélyén.<br>
+Magaddal vihetsz egy ZSEBLÁMPÁT ami VILÁGÍTJA neked az utat.<br>
+Ha összegyűjtöd őket, talán sikerül megtudnod a titkot amit az erdő rejt.<br>
+De légy óvatos! Lehet, hogy nem vagy egyedül...<br>
+
+**MIELŐTT ELINDÍTOD A JÁTÉKOT!**
+
+Jegyezd meg, a játékosod azonosító száma a `9`- es, ez jelzi ki az aktuális helyzeted,<br>
+amit magad előtt látsz `háromszög` alakban mezőket az a zseblámpád által megvilágított terület<br>
+amerre fordulsz arra fogsz látni a sötétségben!<br>
+Lépni adatbekéréssel tudsz, a játék tájékoztatni fog!<br>
+
+**Amit látni fogsz**:
+```
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+      0 0 0                   
+        0                     
+        9                     
+                              
+                              
+                              
+                              
+                              
+
+A te játékosod azonosítója: [9]
+Merre szeretnél lépni?
+	w - felfele
+	a - balra
+	s - lefele
+	d - jobbra
+	m - térkép
+	k - kilépés
+Válasz: 
+```
+
+# Jó játékot! :shipit:
+
+
 
 
 
