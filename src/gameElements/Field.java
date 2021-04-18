@@ -2,6 +2,36 @@ package gameElements;
 
 import fieldElements.FieldElement;
 
+/**
+ * Field osztály
+ *
+ * Adattagjai:
+ *
+ * - row : int
+ *  > Adott sor a mátrixban
+ *
+ * - column : int
+ *  > Adott oszlop a mátrixban
+ *
+ * - isReserved : boolean
+ *  > Foglalt-e a mező
+ *
+ * - containPaper : boolean
+ *  > Tartalmaz-e az adott mező papírt
+ *
+ * - ownerId : int
+ *  > Mező tulajdonosa
+ *
+ * - elementOnTop : FieldElement
+ * > Mezőn lévő tulajdonos
+ *
+ * Feladat:
+ *
+ * @see GameMap
+ * - A GameMap osztályban található areaMatrix adattag felépítő eleme
+ * - A teljes pálya alapja
+ * - Tartalmazza és kezeli a helyszíni adatokat
+ */
 public class Field {
 
     private int row;
@@ -11,6 +41,17 @@ public class Field {
     private int ownerId;
     private FieldElement elementOnTop;
 
+    /**
+     * Field konstruktor
+     *
+     * @param row : int
+     * @param column : int
+     * @param elementOnTop : FieldElement
+     *
+     * Feladat:
+     *
+     * - Értéket ad az osztály adattagjainak
+     */
     public Field(int row, int column, FieldElement elementOnTop) {
 
         this.row = row;
@@ -21,36 +62,27 @@ public class Field {
         this.ownerId = this.elementOnTop.id;
     }
 
+    /**
+     * Getter és Setter típusú függvények
+     *
+     * Feladat:
+     *
+     * - Általános get/set funkció
+     * */
     public int getRow() {
         return row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
     }
 
     public int getColumn() {
         return column;
     }
 
-    public void setColumn(int column) {
-        this.column = column;
-    }
-
     public boolean isReserved() {
         return isReserved;
     }
 
-    public void setReserved(boolean reserved) {
-        isReserved = reserved;
-    }
-
     public int getOwnerId() {
         return ownerId;
-    }
-
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
     }
 
     public boolean isContainPaper() {
@@ -65,6 +97,16 @@ public class Field {
         return elementOnTop;
     }
 
+
+    /**
+     * toString
+     *
+     * @return Tulajdonos id : String
+     *
+     * Feladat:
+     *
+     * - Osztály kiíratásakor az ownerId kiíratása
+     */
     @Override
     public String toString() {
 

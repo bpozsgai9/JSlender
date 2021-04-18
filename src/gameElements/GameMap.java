@@ -12,6 +12,20 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * GameMap osztály
  *
+ * Adattagjai:
+ *
+ * - remainingPaperNumber : int
+ *  > Fennmaradó paírok számát tárolja
+ *
+ * - areaMatrix : Field[][]
+ *  > Mező típúsú mátrix, a pálya teljes szerkezetét tárolja el
+ *
+ * - lastDirection : String
+ *  > A legutóbbi irány amelyre haladt a karakter
+ *
+ * - areyouWon : boolean
+ *  > Eltárolja a játék végső  kimenetelét
+ *
  * Feladat:
  *
  * - Pályaműveletek számítása
@@ -41,13 +55,13 @@ public class GameMap {
     }
 
     /**
-     * @param fileName String típus
+     * @param fileName : String
      *
      * GameMap paraméteres konstruktor
      *
      * Feladat:
      *
-     * - Txt fájl beolvasása, a kapott adatok alapján a egywedi pálya felépítése
+     * - Txt fájl beolvasása, a kapott adatok alapján a egyedi pálya felépítése
      * - A kiindulóhelyzet megjelnítése
      */
     public GameMap(String fileName) {
@@ -58,7 +72,7 @@ public class GameMap {
     }
 
     /**
-     * initAttributes()
+     * initAttributes
      *
      * Feladat:
      *
@@ -72,7 +86,7 @@ public class GameMap {
     }
 
     /**
-     * starterPrint()
+     * starterPrint
      *
      * Feladat:
      *
@@ -87,43 +101,33 @@ public class GameMap {
     }
 
     /**
-     * getRemainingPaperNumber()
-     *
-     * @return  remainingPaperNumber
+     * Getter és Setter típusú függvények
      *
      * Feladat:
      *
-     * - Visszaadja a fennmaradó papírok számát
-     */
-    public int getRemainingPaperNumber() {
-        return this.remainingPaperNumber;
-    }
+     * - Általános get/set funkció
+     * */
+    public int getRemainingPaperNumber() { return this.remainingPaperNumber; }
 
-    /**
-     * getAreaMatrix()
-     *
-     * @return areaMatrix
-     *
-     * Feladat:
-     *
-     * - Visszaadja a mátrixot amely tartalmazza a pályát
-     */
-    public Field[][] getAreaMatrix() {
-        return this.areaMatrix;
-    }
+    public Field[][] getAreaMatrix() { return this.areaMatrix; }
 
     public String getLastDirection() { return this.lastDirection; }
 
-    public boolean areyouWon() {
-        return this.areyouWon;
-    }
-
-    public void setAreyouWon(boolean areyouWon) {
-        this.areyouWon = areyouWon;
-    }
+    public boolean getAreyouWon() { return this.areyouWon; }
 
     public void setLastDirection(String lastDirection) { this.lastDirection = lastDirection; }
 
+    /**
+     * getPlayerActualPosition
+     *
+     * @param areaMatrix : Field[][]
+     * @return A játékos aktuális pozíciója
+     *
+     * Feladat:
+     *
+     * - A függvény visszaadja a játékos aktuális pozícióját
+     * - A játékos azonosítója mindig 9
+     */
     public Field getPlayerActualPosition(Field [][] areaMatrix) {
         for (Field[] matrix : areaMatrix) {
             for (Field field : matrix) {
@@ -135,6 +139,17 @@ public class GameMap {
         return null;
     }
 
+    /**
+     * getSlendermanActualPosition
+     *
+     * @param areaMatrix : Field[][]
+     * @return A Slenderman aktuális pozíciója
+     *
+     * Feladat:
+     *
+     * - A függvény visszaadja a Slenderman aktuális pozícióját
+     * - A játékos azonosítója mindig 8
+     */
     public Field getSlendermanActualPosition(Field [][] areaMatrix) {
         for (Field[] matrix : areaMatrix) {
             for (Field field : matrix) {
@@ -146,6 +161,17 @@ public class GameMap {
         return null;
     }
 
+
+    /**
+     * generateMap
+     *
+     * @param areaMatrix : Field[][]
+     *
+     * Feladat:
+     *
+     * - Konstruktor függvénye, amely egenerálja az alapértelmezett pályát
+     * - Csak üres mátrixot kap
+     */
     private void generateMap(Field [][] areaMatrix) {
 
         for (int row = 0; row < areaMatrix.length; row++) {
@@ -238,6 +264,17 @@ public class GameMap {
         areaMatrix[13][3].setContainPaper(true);
     }
 
+    /**
+     * generateMapViaFile
+     *
+     * @param fileName : String
+     * @param areaMatrix : Field[][]
+     *
+     * Feladat:
+     *
+     * - A paraméteres konstruktor függvénye, amely beolvassott txt fájlból geenerál pályát
+     * - Csak üres mátrixot kap
+     */
     private void generateMapViaFile(String fileName, Field [][] areaMatrix) {
 
         try {
@@ -297,6 +334,16 @@ public class GameMap {
         }
     }
 
+    /**
+     * printCleanMap
+     *
+     * @param areaMatrix : Filed[][]
+     *
+     * Feladat:
+     *
+     * - A játék során lehetőség van rátekinteni a térképre, minden objektum megtalálható rajta, kivétel a Slenderman
+     * - Konzolról beolvasott érték alapján működik
+     */
     public void printCleanMap(Field [][] areaMatrix) {
 
         System.out.println("\nTérkép:");
@@ -326,6 +373,18 @@ public class GameMap {
         System.out.println("-----------------------------");
     }
 
+
+    /**
+     * printMap
+     *
+     * @param areaMatrix : Field[][]
+     *
+     * Feladat:
+     *
+     * - A játék során folyamatosan változik a játékos és a Slenderman pozíciója, minden körben meghívva print-eli ki az új térképet
+     * - Különlegessége hogy a térképen mindig csak a játékos illetve a nála lévő zseblámpa fénye látszódik, egyéb esetelkben "sötétség van"
+     * amerre világít a zseblámpa fénye arra néz éppen a játékos, illetve csak az előtte lévő tereptárgyak látszanak
+     */
     public void printMap(Field [][] areaMatrix) {
 
         boolean w;
@@ -400,6 +459,16 @@ public class GameMap {
 
     }
 
+    /**
+     * controlOverMap
+     *
+     * @param areaMatrix : Filed[][]
+     *
+     * Feladat:
+     *
+     * - A felhasználótól jött vezérlési inputok kezelése
+     * - Az adatok átadása a játékosokat mozgató függvénynek
+     */
     public void controlOverMap(Field [][] areaMatrix) {
 
         System.out.println("\nA te játékosod azonosítója: [9]");
@@ -433,6 +502,19 @@ public class GameMap {
         }
     }
 
+    /**
+     * changeLocation
+     *
+     * @param where : String
+     * @param areaMatrix : Field[][]
+     *
+     * Feladat:
+     *
+     * - A játékosok mozgatása
+     * - Helytelen mezőre való lépések kezelése
+     * - Hibakódok visszadása
+     * - Talált papírok lekezelése
+     */
     private void changeLocation(String where, Field [][] areaMatrix) {
         String reservedError =
                 "------------------------------------------" +
@@ -534,10 +616,32 @@ public class GameMap {
         }
     }
 
+    /**
+     * setFieldEmpty
+     *
+     * @param row : int
+     * @param column  : int
+     *
+     * Feladat:
+     *
+     * - Játékos mozgatásához segédfüggvény
+     * - Ha egy játékos áthaladt egy területen ott "letapossa a füvet"
+     */
     private void setFieldEmpty(int row, int column) {
         this.areaMatrix[row][column] = new Field(row, column, new EmptyField());
     }
 
+    /**
+     * setFieldOwnByPlayer
+     *
+     * @param row : int
+     * @param column : int
+     *
+     * Feladat:
+     *
+     * - Játékos mozgatásához segédfüggvény
+     * - Kilépő eszköz ha az adott területen Slenderman tartózkodik
+     */
     private void setFieldOwnByPlayer(int row, int column) {
 
         if (this.areaMatrix[row][column].getOwnerId() == 8) {
@@ -550,10 +654,30 @@ public class GameMap {
 
     }
 
+    /**
+     * setFieldOwnBySlenderman
+     *
+     * @param row : int
+     * @param column : int
+     *
+     * Feladat:
+     *
+     * - Slenderman mozgatásához segédfüggvény
+     */
     private void setFieldOwnBySlenderman(int row, int column) {
         this.areaMatrix[row][column] = new Field(row, column, new SlenderMan());
     }
 
+    /**
+     * ifContainPaper
+     *
+     * @param paperBeenFound : String
+     *
+     * Feladat:
+     *
+     * - Találtál egy papírt üzenetet ad vissza!
+     * - Vizsgálja a hátralévő papírok számát és az alapján mozgatja a Slenderman-t
+     */
     private void ifContainPaper(String paperBeenFound) {
         System.out.println(paperBeenFound);
         this.remainingPaperNumber--;
@@ -561,6 +685,15 @@ public class GameMap {
         changeSlendermanPosition(this.remainingPaperNumber);
     }
 
+    /**
+     * listenPaperChanges
+     *
+     * @param remainingPaperNumber : int
+     *
+     * Feladat:
+     *
+     * - Vizsgálja a fennmaradó papírok számát, és ez alapján viszi tovább a cselekményt
+     */
     private void listenPaperChanges(int remainingPaperNumber) {
         switch (remainingPaperNumber) {
             case 7:
@@ -594,6 +727,15 @@ public class GameMap {
         }
     }
 
+    /**
+     * changeSlendermanPosition
+     *
+     * @param remainingPaperNumber : int
+     *
+     * Feladat:
+     *
+     * - Megadott feltételek alapján változtatja a Slenderman pozícióját
+     */
     private void changeSlendermanPosition(int remainingPaperNumber) {
         if (remainingPaperNumber == 8 || remainingPaperNumber == 7) {
             generateNewRandomPosition(5, 15);
@@ -606,6 +748,19 @@ public class GameMap {
         }
     }
 
+
+    /**
+     * generateNewRandomPosition
+     *
+     * @param min : int
+     * @param max : int
+     *
+     *
+     * Feladat:
+     *
+     * - changeSlendermanPosition segédfüggvénye
+     * - Feltételek alapján generál új pozíciókat és allítja be őket
+     */
     private void generateNewRandomPosition(int min, int max) {
         Field slendermanPosition = getSlendermanActualPosition(this.getAreaMatrix());
         Field playerPosition = getPlayerActualPosition(this.getAreaMatrix());

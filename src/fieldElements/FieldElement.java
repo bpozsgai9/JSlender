@@ -1,5 +1,16 @@
 package fieldElements;
 
+/**
+ * FieldElement osztály
+ *
+ * Adattagjai:
+ *
+ * -
+ *
+ * Feladat:
+ *
+ * -
+ */
 public class FieldElement {
 
     public int id;

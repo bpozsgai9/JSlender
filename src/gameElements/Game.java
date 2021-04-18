@@ -13,6 +13,10 @@ public class Game {
 
     /**
     * A Game konstruktor
+    * Adattag:
+    *
+    * -  slenderPic : String
+    *  > Látványelem a játékhoz
     *
     * Feladat:
     *
@@ -87,7 +91,7 @@ public class Game {
     }
 
     /**
-     * @param actual GameMap típus
+     * @param actual : GameMap
      *
      * Feladat:
      *
@@ -105,7 +109,7 @@ public class Game {
 
         } while (!(actual.getRemainingPaperNumber() == 0));
 
-        areYouWon = actual.areyouWon();
+        areYouWon = actual.getAreyouWon();
         if (areYouWon) {
             System.out.println("Sikeresen kijutottál az erdőből!\nMost az egyszer...");
         } else {
