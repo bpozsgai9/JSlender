@@ -2,10 +2,24 @@ package gameElements;
 
 import java.util.Scanner;
 
+
+/**
+ * Game osztály
+ * - Az osztály felelős a főmenü és játék műveletek lebonyolításáért
+ */
 public class Game {
 
     private String slenderPic;
 
+    /**
+    * A Game konstruktor
+    *
+    * Feladat:
+    *
+    * - A főképernyő megjelenítése
+    * - Térkép létrehozásása
+    * - Játékmenet legenrálása
+    */
     public Game() {
 
         //fő felirat
@@ -72,6 +86,14 @@ public class Game {
         } while (!(readData.equals("1") || readData.equals("2")));
     }
 
+    /**
+     * @param actual GameMap típus
+     *
+     * Feladat:
+     *
+     * - Térkép frissítése
+     * - Végeredmény eldöntése
+     */
     public void play(GameMap actual) {
 
         boolean areYouWon;

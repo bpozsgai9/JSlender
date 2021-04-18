@@ -9,6 +9,15 @@ import java.io.FileReader;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * GameMap osztály
+ *
+ * Feladat:
+ *
+ * - Pályaműveletek számítása
+ * - Események lekezelése
+ * - Térkép megjelenítése
+ */
 public class GameMap {
 
     private int remainingPaperNumber;
@@ -16,6 +25,14 @@ public class GameMap {
     private String lastDirection;
     private boolean areyouWon;
 
+    /**
+     * GameMap konstruktor
+     *
+     * Feladat:
+     *
+     * - A pálya alapvető elemeinek felépítése
+     * - A kiindulóhelyzet megjelnítése
+     */
     public GameMap() {
 
         initAttributes();
@@ -23,6 +40,16 @@ public class GameMap {
         starterPrint();
     }
 
+    /**
+     * @param fileName String típus
+     *
+     * GameMap paraméteres konstruktor
+     *
+     * Feladat:
+     *
+     * - Txt fájl beolvasása, a kapott adatok alapján a egywedi pálya felépítése
+     * - A kiindulóhelyzet megjelnítése
+     */
     public GameMap(String fileName) {
 
         initAttributes();
@@ -30,6 +57,13 @@ public class GameMap {
         starterPrint();
     }
 
+    /**
+     * initAttributes()
+     *
+     * Feladat:
+     *
+     * - Konstruktor segédfüggvény, az osztály adatagjai kapnak benne értéket
+     */
     private void initAttributes() {
         this.remainingPaperNumber = 8;
         this.areaMatrix = new Field[15][15];
@@ -37,6 +71,14 @@ public class GameMap {
         this.areyouWon = true;
     }
 
+    /**
+     * starterPrint()
+     *
+     * Feladat:
+     *
+     * - Kezdeti helyzet megjelenítése
+     * - Kezdeti cselekményszál kiírása
+     */
     private void starterPrint() {
         //System.out.println(Arrays.deepToString(this.areaMatrix));
         printMap(this.areaMatrix);
@@ -44,14 +86,28 @@ public class GameMap {
                         "\nA távolból csak némi moraj hallatszott a csenden túl, a szél susogása, a levelek zaja...");
     }
 
+    /**
+     * getRemainingPaperNumber()
+     *
+     * @return  remainingPaperNumber
+     *
+     * Feladat:
+     *
+     * - Visszaadja a fennmaradó papírok számát
+     */
     public int getRemainingPaperNumber() {
         return this.remainingPaperNumber;
     }
 
-    public void setRemainingPaperNumber(int remainingPaperNumber) {
-        this.remainingPaperNumber = remainingPaperNumber;
-    }
-
+    /**
+     * getAreaMatrix()
+     *
+     * @return areaMatrix
+     *
+     * Feladat:
+     *
+     * - Visszaadja a mátrixot amely tartalmazza a pályát
+     */
     public Field[][] getAreaMatrix() {
         return this.areaMatrix;
     }
@@ -259,11 +315,11 @@ public class GameMap {
         System.out.println("-----------------------------");
         for (Field[] matrix : areaMatrix) {
             for (Field field : matrix) {
-                /*if (field.getOwnerId() == 8) {
+                if (field.getOwnerId() == 8) {
                     System.out.print("0 ");
-                } else {*/
+                } else {
                     System.out.print(field + " ");
-                //}
+                }
             }
             System.out.println();
         }
@@ -378,7 +434,6 @@ public class GameMap {
     }
 
     private void changeLocation(String where, Field [][] areaMatrix) {
-
         String reservedError =
                 "------------------------------------------" +
                 "\nHiba: Erre nem léphetsz ez a mező foglalt!" +
@@ -510,7 +565,7 @@ public class GameMap {
         switch (remainingPaperNumber) {
             case 7:
                 System.out.println("Mintha valami fénylene a zseblámpalámpa fényében..." +
-                        "\nEgy tépet füzetlap, rajta nagy betűkkel írva: SEGÍTSÉG!!!" +
+                        "\nEgy tépett füzetlap, rajta nagy betűkkel írva: SEGÍTSÉG!!!" +
                         "\nKi hagyta ezt itt?");
                 break;
             case 6:
